@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity() {
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         navController = Navigation.findNavController(this, R.id.navigation_host_fragment)
 
-        setSupportActionBar(binding.toolbar)
-        setupActionBarWithNavController(navController)
+//        setSupportActionBar(binding.toolbar)
+//        setupActionBarWithNavController(navController)
 
         binding.bottomNavigationView.setupWithNavController(navController)
 
