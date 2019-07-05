@@ -19,7 +19,9 @@ buildscript {
         nav_version = '2.0.0-rc02'
         uiAutomatorVersion = '2.2.0'
         workVersion = '1.0.1'
+        tedPermission = '2.0.0'
     }
+
     repositories {
         google()
         jcenter()
