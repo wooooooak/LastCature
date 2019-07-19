@@ -37,6 +37,7 @@ class ScreenShotAdapter :
         fun bind(listener: View.OnClickListener, item: File) {
             binding.apply {
                 screenShot = item
+                onClickListener = listener
             }
         }
     }

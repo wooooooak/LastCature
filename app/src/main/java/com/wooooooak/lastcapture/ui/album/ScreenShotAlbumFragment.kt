@@ -1,4 +1,4 @@
-package com.wooooooak.lastcapture
+package com.wooooooak.lastcapture.ui.album
 
 
 import android.os.Bundle
@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.wooooooak.lastcapture.R
 
 class ScreenShotAlbumFragment : Fragment() {
 
