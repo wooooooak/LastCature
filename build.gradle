@@ -20,6 +20,7 @@ buildscript {
         uiAutomatorVersion = '2.2.0'
         workVersion = '1.0.1'
         tedPermission = '2.0.0'
+        koin_version = '2.0.1'
     }
 
     repositories {
