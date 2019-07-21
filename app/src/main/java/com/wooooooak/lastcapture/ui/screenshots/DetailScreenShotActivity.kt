@@ -14,10 +14,14 @@ class DetailScreenShotActivity : AppCompatActivity() {
 
         val filePath = intent.extras?.get(SHARED_FILE_PATH) ?: ""
         val imageView = thumbnail
+
+        imageView.setOnClickListener {
+            finish()
+        }
+
         Glide.with(imageView.context)
             .load(filePath)
             .into(imageView)
-
     }
 
     companion object {
