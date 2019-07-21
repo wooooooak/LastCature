@@ -34,8 +34,7 @@ class ScreenShotAdapter(private val activity: Activity) :
         }
     }
 
-    private fun createOnClickListener(file: File): View
-    .OnClickListener {
+    private fun createOnClickListener(file: File): View.OnClickListener {
         return View.OnClickListener {
             val intent = Intent(activity, DetailScreenShotActivity::class.java).apply {
                 putExtra(DetailScreenShotActivity.SHARED_FILE_PATH, file.path)
