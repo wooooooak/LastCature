@@ -21,6 +21,7 @@
         <ImageView
             android:id="@+id/thumbnail"
             android:padding="1dp"
+            android:transitionName="screenShot"
             android:background="@drawable/border_black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
