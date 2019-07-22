@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/screenShotAlbumFragment"
-        android:name="com.wooooooak.lastcapture.ui.album.ScreenShotAlbumFragment"
+        android:name="com.wooooooak.lastcapture.ui.album.AlbumSelectorFragment"
         android:label="스크린샷 앨범"
         tools:layout="@layout/fragment_screen_shot_album" />
 </navigation>
