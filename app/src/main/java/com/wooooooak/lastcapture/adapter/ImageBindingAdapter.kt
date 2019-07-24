@@ -1,5 +1,6 @@
 package com.wooooooak.lastcapture.adapter
 
+import android.net.Uri
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -15,4 +16,12 @@ fun bindImageFromLocalFile(view: ImageView, file: File?) {
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(view)
     }
+}
+
+@BindingAdapter("imageFromUri")
+fun bindingImageFromUri(view: ImageView, uri: Uri) {
+    Glide.with(view.context)
+        .load(uri)
+        .transition(DrawableTransitionOptions.withCrossFade())
+        .into(view)
 }

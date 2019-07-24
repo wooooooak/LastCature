@@ -46,7 +46,6 @@ class ScreenShotAdapter(private val activity: Activity) :
         }
     }
 
-
     class ViewHolder(
         val binding: ItemThumbnailBinding
     ) : RecyclerView.ViewHolder(binding.root) {
