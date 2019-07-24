@@ -1,17 +1,19 @@
 package com.wooooooak.lastcapture.ui.album.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import com.wooooooak.lastcapture.R
 import com.wooooooak.lastcapture.data.Album
 import com.wooooooak.lastcapture.databinding.ItemAlbumBinding
 
 class AlbumListAdapter : ListAdapter<Album, AlbumListAdapter.ViewHolder>(AlbumDiffCallback()) {
+
+    val selectedAlbumList = mutableListOf<Int>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -25,17 +27,20 @@ class AlbumListAdapter : ListAdapter<Album, AlbumListAdapter.ViewHolder>(AlbumDi
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val album = getItem(position)
-        holder.bind(album, createOnClickListener(album))
+        holder.bind(album, createOnClickListener(album, position))
     }
 
-    private fun createOnClickListener(album: Album): View.OnClickListener {
+    private fun createOnClickListener(album: Album, position: Int): View.OnClickListener {
         return View.OnClickListener {
-            if (album.isSelected) {
+            if (selectedAlbumList.contains(position)) {
                 it.setBackgroundResource(0)
+                selectedAlbumList.remove(position)
+                album.isSelected = false
             } else {
                 it.setBackgroundResource(R.drawable.border_red)
+                selectedAlbumList.add(position)
+                album.isSelected = true
             }
-            album.isSelected = !album.isSelected
         }
     }
 

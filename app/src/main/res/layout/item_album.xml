@@ -14,14 +14,16 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{onClickListener}">
+        android:layout_margin="4dp">
 
         <ImageView
             android:id="@+id/imageView"
+            android:onClick="@{onClickListener}"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:cropToPadding="false"
             android:padding="4dp"
+            app:check="@{album.isSelected}"
             android:scaleType="centerCrop"
             app:imageFromUri="@{album.thumbnail}"
             app:layout_constraintStart_toStartOf="parent"
