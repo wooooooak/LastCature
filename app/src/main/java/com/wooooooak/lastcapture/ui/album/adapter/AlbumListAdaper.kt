@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.wooooooak.lastcapture.R
 import com.wooooooak.lastcapture.data.Album
 import com.wooooooak.lastcapture.databinding.ItemAlbumBinding
 
@@ -24,12 +25,17 @@ class AlbumListAdapter : ListAdapter<Album, AlbumListAdapter.ViewHolder>(AlbumDi
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val album = getItem(position)
-        holder.bind(album, createOnClickListener())
+        holder.bind(album, createOnClickListener(album))
     }
 
-    private fun createOnClickListener(): View.OnClickListener {
+    private fun createOnClickListener(album: Album): View.OnClickListener {
         return View.OnClickListener {
-            Snackbar.make(it, "click", Snackbar.LENGTH_SHORT).show()
+            if (album.isSelected) {
+                it.setBackgroundResource(0)
+            } else {
+                it.setBackgroundResource(R.drawable.border_red)
+            }
+            album.isSelected = !album.isSelected
         }
     }
 
