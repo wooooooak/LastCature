@@ -6,8 +6,8 @@ import com.wooooooak.lastcapture.data.ScreenShotRepository
 
 class ShowingLastThreeViewModel(repository: ScreenShotRepository) : ViewModel() {
     private val screenShotCount = MyApplication.pref.screenShotCount
-    private val selectedFolderStringSet = MyApplication.pref.selectedFolder
+    private val selectedFolderUriSet = MyApplication.pref.selectedFolderUris
 
-    val screenShots = repository.getScreenShot(screenShotCount, selectedFolderStringSet)
+    val screenShots = repository.getScreenShot(screenShotCount, selectedFolderUriSet)
 
 }

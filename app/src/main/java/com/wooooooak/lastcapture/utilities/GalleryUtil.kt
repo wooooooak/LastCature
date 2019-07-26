@@ -4,6 +4,7 @@ import android.app.Application
 import android.database.Cursor
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
 import com.wooooooak.lastcapture.data.Album
 import com.wooooooak.lastcapture.data.Image
 import java.io.File
@@ -32,13 +33,15 @@ class GalleryUtil {
                     .toSortedMap()
                     .map { entry -> getAlbum(entry) }
                     .toList()
-
             }
             return albumList
         }
 
-        private fun getAlbum(entry: Map.Entry<String, List<Image>>) =
-            Album(entry.key, entry.value[0].uri, entry.value)
+        private fun getAlbum(entry: Map.Entry<String, List<Image>>): Album {
+
+            val albumUriPath = entry.value[0].uri.path?.substringBeforeLast("/") ?: ""
+            return Album(entry.key, albumUriPath, entry.value[0].uri, entry.value)
+        }
 
         private fun getImage(cursor: Cursor): Image {
             return cursor.run {
