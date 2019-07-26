@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import java.io.File
 
 class ScreenShotRepository {
-    fun getScreenShot(count: Int): LiveData<List<File>> {
+    fun getScreenShot(count: Int, folderNameSet: Set<String>): LiveData<List<File>> {
         val path = Environment.getExternalStorageDirectory().absolutePath + "/DCIM/Screenshots"
         val screenShots = File(path).listFiles()?.apply {
             sortBy { it.lastModified() } }?.takeLast(count)?.reversed()

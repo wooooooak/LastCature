@@ -12,9 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.screenshots.DetailScreenShotActivity"
+
+        <activity
+            android:name=".ui.screenshots.DetailScreenShotActivity"
             android:theme="@style/AppTheme.NoActionBar">
-        ></activity>
+        </activity>
+
         <activity
             android:name=".ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -24,6 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

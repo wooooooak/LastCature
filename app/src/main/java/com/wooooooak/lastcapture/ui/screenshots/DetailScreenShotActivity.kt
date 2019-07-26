@@ -18,10 +18,10 @@ class DetailScreenShotActivity : AppCompatActivity() {
         imageView.setOnClickListener {
             onBackPressed()
         }
+
         Glide.with(imageView.context)
             .load(filePath)
             .into(imageView)
-
     }
 
     companion object {
