@@ -16,7 +16,7 @@ class DetailScreenShotActivity : AppCompatActivity() {
         val imageView = thumbnail
 
         imageView.setOnClickListener {
-            finish()
+            onBackPressed()
         }
         Glide.with(imageView.context)
             .load(filePath)
