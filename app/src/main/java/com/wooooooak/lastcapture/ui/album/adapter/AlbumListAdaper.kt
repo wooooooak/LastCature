@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.item_album.view.*
 
 class AlbumListAdapter : ListAdapter<Album, AlbumListAdapter.ViewHolder>(AlbumDiffCallback()) {
     private val pref = MyApplication.pref
-    private val selectedAlbumList = mutableListOf<Int>()
+    private val selectedAlbumSet = mutableSetOf<Int>() //set 으로 하면 해결은 될듯
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -30,10 +30,10 @@ class AlbumListAdapter : ListAdapter<Album, AlbumListAdapter.ViewHolder>(AlbumDi
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val album = getItem(position)
         if (pref.selectedFolderUris.contains(album.albumUriPath)) {
-            selectedAlbumList.add(position)
+            selectedAlbumSet.add(position)
             album.isSelected = true
         } else {
-            selectedAlbumList.remove(position)
+            selectedAlbumSet.remove(position)
             album.isSelected = false
         }
         holder.bind(album, createOnClickListener(album, position))
@@ -41,15 +41,15 @@ class AlbumListAdapter : ListAdapter<Album, AlbumListAdapter.ViewHolder>(AlbumDi
 
     private fun createOnClickListener(album: Album, position: Int): View.OnClickListener {
         return View.OnClickListener {
-            if (selectedAlbumList.contains(position)) {
+            if (selectedAlbumSet.contains(position)) {
                 pref.applyFolder { remove(album.albumUriPath) }
                 it.setBackgroundResource(0)
-                selectedAlbumList.remove(position)
+                selectedAlbumSet.remove(position)
                 album.isSelected = false
             } else {
                 pref.applyFolder { add(album.albumUriPath) }
                 it.setBackgroundResource(R.drawable.border_red)
-                selectedAlbumList.add(position)
+                selectedAlbumSet.add(position)
                 album.isSelected = true
             }
         }
