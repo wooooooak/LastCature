@@ -19,7 +19,7 @@ class AlbumSelectorViewModel(application: Application) : AndroidViewModel(applic
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            _albumList.postValue(GalleryUtil.getAlbumList(application))
+            _albumList.postValue(GalleryUtil.getAllAlbumList(application))
         }
     }
 

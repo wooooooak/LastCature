@@ -18,7 +18,7 @@ class GalleryUtil {
         private val INDEX_DATE_TAKEN = MediaStore.Images.Media.DATE_TAKEN
         private val orderOption = "$INDEX_DATE_TAKEN DESC"
 
-        fun getAlbumList(application: Application): List<Album> {
+        fun getAllAlbumList(application: Application): List<Album> {
             val projection = arrayOf(INDEX_MEDIA_URI, INDEX_ALBUM_NAME, INDEX_IMAGE_NAME)
             val cursor = application.contentResolver.query(uri, projection, null, null, orderOption)
             var albumList: List<Album> = listOf()
