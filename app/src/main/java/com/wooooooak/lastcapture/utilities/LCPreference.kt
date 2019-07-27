@@ -3,7 +3,7 @@ package com.wooooooak.lastcapture.utilities
 import android.content.Context
 import androidx.core.content.edit
 
-class LCPreference internal constructor (context: Context) {
+class LCPreference internal constructor(context: Context) {
     private val FILE_NAME = "lastCapture"
     private val SELECTED_FOLDER = "selected folder"
     private val SCREENSHOT_COUNT = "screen shot count"

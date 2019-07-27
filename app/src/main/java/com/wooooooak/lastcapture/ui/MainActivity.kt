@@ -1,18 +1,14 @@
 package com.wooooooak.lastcapture.ui
 
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
-import com.wooooooak.lastcapture.MyApplication
 import com.wooooooak.lastcapture.R
 import com.wooooooak.lastcapture.databinding.ActivityMainBinding
-import com.wooooooak.lastcapture.ui.screenshots.ShowingLastThreeFragmentDirections
 import com.wooooooak.lastcapture.utilities.PermissionUtil
 
 class MainActivity : AppCompatActivity() {

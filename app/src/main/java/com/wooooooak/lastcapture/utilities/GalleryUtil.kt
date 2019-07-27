@@ -4,14 +4,13 @@ import android.app.Application
 import android.database.Cursor
 import android.net.Uri
 import android.provider.MediaStore
-import android.util.Log
 import com.wooooooak.lastcapture.data.Album
 import com.wooooooak.lastcapture.data.Image
 import java.io.File
 
 class GalleryUtil {
-    companion object {
 
+    companion object {
         private val uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         private val INDEX_MEDIA_URI = MediaStore.MediaColumns.DATA
         private val INDEX_ALBUM_NAME = MediaStore.Images.Media.BUCKET_DISPLAY_NAME

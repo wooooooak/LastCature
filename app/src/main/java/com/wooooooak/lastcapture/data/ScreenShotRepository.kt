@@ -9,7 +9,8 @@ class ScreenShotRepository {
     fun getScreenShot(count: Int, folderUriSet: Set<String>): LiveData<List<File>> {
         val path = Environment.getExternalStorageDirectory().absolutePath + "/DCIM/Screenshots"
         val screenShots = File(path).listFiles()?.apply {
-            sortBy { it.lastModified() } }?.takeLast(count)?.reversed()
+            sortBy { it.lastModified() }
+        }?.takeLast(count)?.reversed()
         return MutableLiveData<List<File>>().apply { value = screenShots }
     }
 }
