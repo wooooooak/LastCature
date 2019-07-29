@@ -29,7 +29,7 @@ class AlbumListAdapter : ListAdapter<Album, AlbumListAdapter.ViewHolder>(AlbumDi
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val album = getItem(position)
-        if (pref.selectedFolderUris.contains(album.albumUriPath)) {
+        if (album.albumUriPath in pref.selectedFolderUris) {
             selectedAlbumSet.add(position)
             album.isSelected = true
         } else {
@@ -41,7 +41,7 @@ class AlbumListAdapter : ListAdapter<Album, AlbumListAdapter.ViewHolder>(AlbumDi
 
     private fun createOnClickListener(album: Album, position: Int): View.OnClickListener {
         return View.OnClickListener {
-            if (selectedAlbumSet.contains(position)) {
+            if (position in selectedAlbumSet) {
                 pref.applyFolder { remove(album.albumUriPath) }
                 it.setBackgroundResource(0)
                 selectedAlbumSet.remove(position)
