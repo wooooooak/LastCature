@@ -1,6 +1,5 @@
 package com.wooooooak.lastcapture.utilities
 
-import android.util.Log
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,8 +23,4 @@ fun File.getRecentImageList(count: Int): List<File> {
 }
 
 val File.lastModifiedTime: String
-    get() {
-        val time = SimpleDateFormat("yyyy.MM.dd").format(Date(this.lastModified()))
-        Log.d("FileExt", time)
-        return time
-    }
+    get() = SimpleDateFormat("yyyy년MM월dd일").format(Date(lastModified()))
