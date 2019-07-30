@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wooooooak.lastcapture.R
 import com.wooooooak.lastcapture.databinding.ItemThumbnailBinding
 import com.wooooooak.lastcapture.ui.screenshots.DetailScreenShotActivity
+import com.wooooooak.lastcapture.utilities.lastModifiedTime
 import java.io.File
 
 class ScreenShotAdapter(private val activity: Activity) :
@@ -53,6 +54,7 @@ class ScreenShotAdapter(private val activity: Activity) :
             binding.apply {
                 screenShot = item
                 onClickListener = listener
+                time = item.lastModifiedTime
             }
         }
     }

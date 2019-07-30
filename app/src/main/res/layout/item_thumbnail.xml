@@ -10,6 +10,9 @@
         <variable
             name="onClickListener"
             type="android.view.View.OnClickListener" />
+        <variable
+            name="time"
+            type="String" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
@@ -38,7 +41,7 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{screenShot.name}"
+            android:text="@{time}"
             tools:text="1일전"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/thumbnail"

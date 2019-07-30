@@ -1,7 +1,9 @@
 package com.wooooooak.lastcapture.ui.screenshots
 
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,11 +20,16 @@ class ShowingLastThreeFragment : Fragment() {
     private lateinit var binding: FragmentShowingLastThreeBinding
     private val viewModel: ShowingLastThreeViewModel by viewModel()
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        Log.d("ShowingLastThree", "onAttach")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        Log.d("ShowingLastThree", "onCreate")
         val adapter = ScreenShotAdapter(requireActivity())
 
         binding = FragmentShowingLastThreeBinding.inflate(inflater, container, false).apply {
@@ -35,12 +42,11 @@ class ShowingLastThreeFragment : Fragment() {
         }
 
         subscribeUi(adapter)
-
         return binding.root
     }
 
     private fun subscribeUi(adapter: ScreenShotAdapter) {
-        viewModel.screenShots.observe(this, Observer { screenShots ->
+        viewModel.screenShots.observe(viewLifecycleOwner, Observer { screenShots ->
             adapter.submitList(screenShots)
         })
     }
