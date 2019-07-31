@@ -8,6 +8,12 @@
         <variable
             name="viewModel"
             type="com.wooooooak.lastcapture.ui.screenshots.ShowingLastThreeViewModel" />
+        <variable
+            name="onClickDefaultFloatingButton"
+            type="android.view.View.OnClickListener" />
+        <variable
+            name="onClickSettingCountButton"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,5 +33,38 @@
             tools:listitem="@layout/item_thumbnail">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/extendedFloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:onClick="@{onClickDefaultFloatingButton}"
+            android:text="@{String.valueOf(viewModel.showingCount)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/extendedFloatingActionButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            tools:visibility="visible"
+            android:onClick="@{onClickSettingCountButton}"
+            android:text="10"
+            app:layout_constraintBottom_toTopOf="@+id/extendedFloatingActionButton"
+            app:layout_constraintEnd_toEndOf="@+id/extendedFloatingActionButton" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/default_floating_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            tools:visibility="visible"
+            android:onClick="@{onClickSettingCountButton}"
+            android:text="15"
+            app:layout_constraintBottom_toTopOf="@+id/extendedFloatingActionButton2"
+            app:layout_constraintEnd_toEndOf="@+id/extendedFloatingActionButton2" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

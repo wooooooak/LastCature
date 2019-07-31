@@ -8,7 +8,7 @@ class LCPreference internal constructor(context: Context) {
     private val SELECTED_FOLDER = "selected folder"
     private val SCREENSHOT_COUNT = "screen shot count"
     private val DEFAULT_FOLDER_URI = ""
-    private val DEFAULT_SCREENSHOT_COUNT = 8
+    private val DEFAULT_SCREENSHOT_COUNT = 10
 
 
     private val pref = context.getSharedPreferences(FILE_NAME, 0)

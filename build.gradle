@@ -13,7 +13,7 @@ buildscript {
         ktlintVersion = '0.30.0'
         ktxVersion = '1.0.2'
         lifecycleVersion = '2.1.0-alpha02'
-        materialVersion = '1.0.0'
+        materialVersion = '1.1.0-alpha06'
         roomVersion = '2.1.0-alpha04'
         recyclerViewVersion = '1.1.0-alpha02'
         nav_version = '2.0.0-rc02'

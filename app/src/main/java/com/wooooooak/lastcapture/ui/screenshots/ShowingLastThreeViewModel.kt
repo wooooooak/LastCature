@@ -1,13 +1,30 @@
 package com.wooooooak.lastcapture.ui.screenshots
 
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.wooooooak.lastcapture.MyApplication
 import com.wooooooak.lastcapture.data.ScreenShotRepository
 
-class ShowingLastThreeViewModel(repository: ScreenShotRepository) : ViewModel() {
+class ShowingLastThreeViewModel(private val repository: ScreenShotRepository) : ViewModel() {
     private val screenShotCount = MyApplication.pref.screenShotCount
     private val selectedFolderUriSet = MyApplication.pref.selectedFolderUris
 
-    val screenShots = repository.getScreenShot(screenShotCount, selectedFolderUriSet)
+    private val _showingCount = MutableLiveData<Int>().apply { value = screenShotCount }
+    val showingCount: LiveData<Int>
+        get() = _showingCount
+
+    val screenShots = Transformations.map(_showingCount) {
+        Log.d("tag", it.toString())
+        repository.getScreenShot(it, selectedFolderUriSet)
+    }
+
+    fun setShowingCount(value: Int) {
+        Log.d("tag", "here")
+        MyApplication.pref.screenShotCount = value
+        _showingCount.value = value
+    }
 
 }
