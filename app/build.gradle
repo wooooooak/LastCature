@@ -60,9 +60,7 @@ dependencies {
 
     // koin
     implementation "org.koin:koin-core:$koin_version"
-    // Koin AndroidX Scope features
     implementation "org.koin:koin-androidx-scope:$koin_version"
-    // Koin AndroidX ViewModel features
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 
     testImplementation 'junit:junit:4.12'

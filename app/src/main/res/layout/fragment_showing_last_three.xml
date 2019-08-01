@@ -5,6 +5,7 @@
     tools:context=".ui.screenshots.ShowingLastThreeFragment">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="viewModel"
             type="com.wooooooak.lastcapture.ui.screenshots.ShowingLastThreeViewModel" />
@@ -35,7 +36,7 @@
         </androidx.recyclerview.widget.RecyclerView>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/extendedFloatingActionButton"
+            android:id="@+id/extended_floating_actionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -50,18 +51,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            tools:visibility="visible"
+            android:visibility="@{viewModel.floatingButtonVisibility ? View.VISIBLE : View.INVISIBLE }"
             android:onClick="@{onClickSettingCountButton}"
             android:text="10"
-            app:layout_constraintBottom_toTopOf="@+id/extendedFloatingActionButton"
-            app:layout_constraintEnd_toEndOf="@+id/extendedFloatingActionButton" />
+            app:layout_constraintBottom_toTopOf="@+id/extended_floating_actionButton"
+            app:layout_constraintEnd_toEndOf="@+id/extended_floating_actionButton" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/default_floating_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            tools:visibility="visible"
+            android:visibility="@{viewModel.floatingButtonVisibility ? View.VISIBLE : View.INVISIBLE }"
             android:onClick="@{onClickSettingCountButton}"
             android:text="15"
             app:layout_constraintBottom_toTopOf="@+id/extendedFloatingActionButton2"

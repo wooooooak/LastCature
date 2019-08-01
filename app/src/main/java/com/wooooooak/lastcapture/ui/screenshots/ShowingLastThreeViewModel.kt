@@ -12,12 +12,15 @@ class ShowingLastThreeViewModel(private val repository: ScreenShotRepository) : 
     private val screenShotCount = MyApplication.pref.screenShotCount
     private val selectedFolderUriSet = MyApplication.pref.selectedFolderUris
 
+    private val _floatingButtonVisibility = MutableLiveData<Boolean>().apply { value = false }
+    val floatingButtonVisibility: LiveData<Boolean>
+        get() = _floatingButtonVisibility
+
     private val _showingCount = MutableLiveData<Int>().apply { value = screenShotCount }
     val showingCount: LiveData<Int>
         get() = _showingCount
 
     val screenShots = Transformations.map(_showingCount) {
-        Log.d("tag", it.toString())
         repository.getScreenShot(it, selectedFolderUriSet)
     }
 
@@ -25,6 +28,13 @@ class ShowingLastThreeViewModel(private val repository: ScreenShotRepository) : 
         Log.d("tag", "here")
         MyApplication.pref.screenShotCount = value
         _showingCount.value = value
+    }
+
+    fun setFloatingButtonVisibility() {
+        _floatingButtonVisibility.value?.let {
+            Log.d("tag", it.toString())
+            _floatingButtonVisibility.value = !it
+        }
     }
 
 }
