@@ -1,6 +1,5 @@
 package com.wooooooak.lastcapture.ui.screenshots
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -11,6 +10,11 @@ import com.wooooooak.lastcapture.data.ScreenShotRepository
 class ShowingLastThreeViewModel(private val repository: ScreenShotRepository) : ViewModel() {
     private val screenShotCount = MyApplication.pref.screenShotCount
     private val selectedFolderUriSet = MyApplication.pref.selectedFolderUris
+
+    private val _defaultFloatingButtonVisibility =
+        MutableLiveData<Boolean>().apply { value = false }
+    val defaultFloatingButtonVisibility: LiveData<Boolean>
+        get() = _defaultFloatingButtonVisibility
 
     private val _floatingButtonVisibility = MutableLiveData<Boolean>().apply { value = false }
     val floatingButtonVisibility: LiveData<Boolean>
@@ -29,9 +33,16 @@ class ShowingLastThreeViewModel(private val repository: ScreenShotRepository) : 
         _showingCount.value = value
     }
 
-    fun setFloatingButtonVisibility() {
+    fun changeFloatingButtonVisibility() {
         _floatingButtonVisibility.value?.let {
             _floatingButtonVisibility.value = !it
+        }
+    }
+
+    fun setAllFloatingButtonVisibility(isVisible: Boolean) {
+        _defaultFloatingButtonVisibility.value = isVisible
+        if (!isVisible) {
+            _floatingButtonVisibility.value = isVisible
         }
     }
 

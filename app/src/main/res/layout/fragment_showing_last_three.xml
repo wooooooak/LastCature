@@ -44,6 +44,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:textAlignment="center"
+            android:visibility="@{viewModel.defaultFloatingButtonVisibility ? View.VISIBLE : View.INVISIBLE}"
             android:onClick="@{onClickDefaultFloatingButton}"
             android:text="@{String.valueOf(viewModel.showingCount)}"
             app:layout_constraintBottom_toBottomOf="parent"
