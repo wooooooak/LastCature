@@ -25,14 +25,12 @@ class ShowingLastThreeViewModel(private val repository: ScreenShotRepository) : 
     }
 
     fun setShowingCount(value: Int) {
-        Log.d("tag", "here")
         MyApplication.pref.screenShotCount = value
         _showingCount.value = value
     }
 
     fun setFloatingButtonVisibility() {
         _floatingButtonVisibility.value?.let {
-            Log.d("tag", it.toString())
             _floatingButtonVisibility.value = !it
         }
     }

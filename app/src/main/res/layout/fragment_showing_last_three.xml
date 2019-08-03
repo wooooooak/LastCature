@@ -29,8 +29,10 @@
             android:paddingTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/item_thumbnail">
 
         </androidx.recyclerview.widget.RecyclerView>
@@ -41,6 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:textAlignment="center"
             android:onClick="@{onClickDefaultFloatingButton}"
             android:text="@{String.valueOf(viewModel.showingCount)}"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -51,17 +54,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:visibility="@{viewModel.floatingButtonVisibility ? View.VISIBLE : View.INVISIBLE }"
             android:onClick="@{onClickSettingCountButton}"
             android:text="10"
+            android:textAlignment="center"
+            android:visibility="@{viewModel.floatingButtonVisibility ? View.VISIBLE : View.INVISIBLE }"
             app:layout_constraintBottom_toTopOf="@+id/extended_floating_actionButton"
-            app:layout_constraintEnd_toEndOf="@+id/extended_floating_actionButton" />
+            app:layout_constraintEnd_toEndOf="@+id/extended_floating_actionButton"
+            app:layout_constraintStart_toStartOf="@+id/extended_floating_actionButton" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/default_floating_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:textAlignment="center"
             android:visibility="@{viewModel.floatingButtonVisibility ? View.VISIBLE : View.INVISIBLE }"
             android:onClick="@{onClickSettingCountButton}"
             android:text="15"

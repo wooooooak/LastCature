@@ -15,9 +15,7 @@ class MyApplication: Application() {
         pref = LCPreference(applicationContext)
         super.onCreate()
         startKoin {
-            // Android context
             androidContext(this@MyApplication)
-            // modules
             modules(appModule)
         }
     }
