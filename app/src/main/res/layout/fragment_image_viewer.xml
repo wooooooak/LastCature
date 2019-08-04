@@ -8,7 +8,7 @@
         <import type="android.view.View" />
         <variable
             name="viewModel"
-            type="com.wooooooak.lastcapture.ui.screenshots.ShowingLastThreeViewModel" />
+            type="com.wooooooak.lastcapture.ui.screenshots.ImageViewerViewModel" />
         <variable
             name="onClickDefaultFloatingButton"
             type="android.view.View.OnClickListener" />

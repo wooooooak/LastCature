@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.wooooooak.lastcapture.MyApplication
 import com.wooooooak.lastcapture.data.ScreenShotRepository
 
-class ShowingLastThreeViewModel(private val repository: ScreenShotRepository) : ViewModel() {
+class ImageViewerViewModel(private val repository: ScreenShotRepository) : ViewModel() {
     private val screenShotCount = MyApplication.pref.screenShotCount
     private val selectedFolderUriSet = MyApplication.pref.selectedFolderUris
 

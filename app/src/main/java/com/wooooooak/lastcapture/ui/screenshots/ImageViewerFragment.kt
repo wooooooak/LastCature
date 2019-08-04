@@ -11,15 +11,16 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.wooooooak.lastcapture.BR
-import com.wooooooak.lastcapture.databinding.FragmentShowingLastThreeBinding
+import com.wooooooak.lastcapture.databinding.FragmentImageViewerBinding
+import com.wooooooak.lastcapture.databinding.FragmentImageViewerBindingImpl
 import com.wooooooak.lastcapture.ui.screenshots.adater.ScreenShotAdapter
-import kotlinx.android.synthetic.main.fragment_showing_last_three.view.*
+import kotlinx.android.synthetic.main.fragment_image_viewer.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ShowingLastThreeFragment : Fragment() {
 
-    private lateinit var binding: FragmentShowingLastThreeBinding
-    private val showingLastThreeViewModel: ShowingLastThreeViewModel by viewModel()
+    private lateinit var binding: FragmentImageViewerBinding
+    private val imageViewerViewModel: ImageViewerViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,8 +28,8 @@ class ShowingLastThreeFragment : Fragment() {
     ): View? {
         val adapter = ScreenShotAdapter(requireActivity())
 
-        binding = FragmentShowingLastThreeBinding.inflate(inflater, container, false).apply {
-            setVariable(BR.viewModel, showingLastThreeViewModel)
+        binding = FragmentImageViewerBindingImpl.inflate(inflater, container, false).apply {
+            setVariable(BR.viewModel, imageViewerViewModel)
             setRecyclerView(this, adapter)
             lifecycleOwner = this@ShowingLastThreeFragment
             executePendingBindings()
@@ -37,26 +38,26 @@ class ShowingLastThreeFragment : Fragment() {
         subscribeUi(adapter)
 
         binding.onClickDefaultFloatingButton = View.OnClickListener {
-            showingLastThreeViewModel.changeFloatingButtonVisibility()
+            imageViewerViewModel.changeFloatingButtonVisibility()
         }
 
         binding.onClickSettingCountButton = View.OnClickListener {
             val view = it as ExtendedFloatingActionButton
             val count = view.text.toString().toInt()
-            showingLastThreeViewModel.setShowingCount(count)
-            showingLastThreeViewModel.changeFloatingButtonVisibility()
+            imageViewerViewModel.setShowingCount(count)
+            imageViewerViewModel.changeFloatingButtonVisibility()
         }
 
         return binding.root
     }
 
     private fun subscribeUi(adapter: ScreenShotAdapter) {
-        showingLastThreeViewModel.screenShots.observe(viewLifecycleOwner, Observer { screenShots ->
+        imageViewerViewModel.screenShots.observe(viewLifecycleOwner, Observer { screenShots ->
             adapter.submitList(screenShots)
         })
     }
 
-    private fun setRecyclerView(binding: FragmentShowingLastThreeBinding, adapter: ScreenShotAdapter) {
+    private fun setRecyclerView(binding: FragmentImageViewerBinding, adapter: ScreenShotAdapter) {
         with(binding) {
             screenshotList.adapter = adapter
             screenshotList.layoutManager = StaggeredGridLayoutManager(
@@ -67,7 +68,7 @@ class ShowingLastThreeFragment : Fragment() {
                 RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
-                    showingLastThreeViewModel.setAllFloatingButtonVisibility(dy <= 0)
+                    imageViewerViewModel.setAllFloatingButtonVisibility(dy <= 0)
                 }
             })
         }
