@@ -26,8 +26,7 @@ class ShowingLastThreeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val adapter = ScreenShotAdapter(requireActivity())
-
+        val adapter = ScreenShotAdapter(requireActivity(), imageViewerViewModel)
         binding = FragmentImageViewerBindingImpl.inflate(inflater, container, false).apply {
             setVariable(BR.viewModel, imageViewerViewModel)
             setRecyclerView(this, adapter)

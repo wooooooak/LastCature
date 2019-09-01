@@ -28,6 +28,10 @@ class ImageViewerViewModel(private val repository: ScreenShotRepository) : ViewM
         repository.getScreenShot(it, selectedFolderUriSet)
     }
 
+    fun refreshItem() {
+        _showingCount.value= screenShotCount
+    }
+
     fun setShowingCount(value: Int) {
         MyApplication.pref.screenShotCount = value
         _showingCount.value = value

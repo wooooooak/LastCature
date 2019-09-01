@@ -2,21 +2,30 @@ package com.wooooooak.lastcapture.ui.screenshots.adater
 
 import android.app.Activity
 import android.content.Intent
+import android.media.MediaScannerConnection
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.wooooooak.lastcapture.R
 import com.wooooooak.lastcapture.databinding.ItemThumbnailBinding
 import com.wooooooak.lastcapture.ui.screenshots.DetailScreenShotActivity
+import com.wooooooak.lastcapture.ui.screenshots.ImageViewerViewModel
 import com.wooooooak.lastcapture.utilities.lastModifiedTime
+import wooooooak.dev.kcsimplealertview.woakalertview.SimpleAlertView
 import java.io.File
 
-class ScreenShotAdapter(private val activity: Activity) :
-    ListAdapter<File, ScreenShotAdapter.ViewHolder>(ScreenShotDiffCallback()) {
+class ScreenShotAdapter(
+    private val activity: Activity,
+    private val imageViewerViewModel: ImageViewerViewModel
+) : ListAdapter<File, ScreenShotAdapter.ViewHolder>(ScreenShotDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -30,13 +39,14 @@ class ScreenShotAdapter(private val activity: Activity) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val screenShot = getItem(position)
         holder.apply {
-            bind(createOnClickListener(screenShot), screenShot)
+            val (onClickListener, onLongClickListener) = createOnClickListener(screenShot)
+            bind(onClickListener, onLongClickListener, screenShot)
             itemView.tag = screenShot
         }
     }
 
-    private fun createOnClickListener(file: File): View.OnClickListener {
-        return View.OnClickListener {
+    private fun createOnClickListener(file: File): Pair<View.OnClickListener, View.OnLongClickListener> {
+        val onClickListener = View.OnClickListener {
             val intent = Intent(activity, DetailScreenShotActivity::class.java).apply {
                 putExtra(DetailScreenShotActivity.SHARED_FILE_PATH, file.path)
             }
@@ -45,15 +55,61 @@ class ScreenShotAdapter(private val activity: Activity) :
             )
             activity.startActivity(intent, options.toBundle())
         }
+
+        val onLongClickListener = View.OnLongClickListener {
+            showDeleteAlertView(file, it)
+            true
+        }
+
+        return Pair(onClickListener, onLongClickListener)
     }
 
-    class ViewHolder(
+    private fun showDeleteAlertView(file: File, view: View) {
+        SimpleAlertView(activity as AppCompatActivity) {
+            title {
+                text = "해당 이미지를\n삭제하시겠습니까?"
+            }
+            button {
+                text = "취소"
+            }
+            button {
+                text = "삭제"
+                textColor = ContextCompat.getColor(activity, R.color.colorAccent)
+                onClick = {
+                    if (file.exists()) {
+                        file.delete()
+                        callBroadCast()
+                        imageViewerViewModel.refreshItem()
+                        Snackbar.make(view, "삭제 완료", Snackbar.LENGTH_SHORT).show()
+                    } else {
+                        Snackbar.make(view, "존재하지 않는 파일입니다.", Snackbar.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }.show()
+    }
+
+    private fun callBroadCast() {
+        MediaScannerConnection.scanFile(
+            activity, arrayOf(
+                Environment.getExternalStorageDirectory
+                    ().toString()
+            ), null
+        ) { _, _ -> }
+    }
+
+    inner class ViewHolder(
         val binding: ItemThumbnailBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(listener: View.OnClickListener, item: File) {
+        fun bind(
+            onClickListener: View.OnClickListener,
+            onLongClickListener: View.OnLongClickListener,
+            item: File
+        ) {
             binding.apply {
                 screenShot = item
-                onClickListener = listener
+                this.onClickListener = onClickListener
+                this.onLongClickListener = onLongClickListener
                 time = item.lastModifiedTime
             }
         }

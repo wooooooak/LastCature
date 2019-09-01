@@ -36,7 +36,7 @@ dependencies {
     implementation "androidx.core:core-ktx:$ktxVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
-
+    implementation "com.github.wooooooak:kcsimplealertview:1.0.2"
     implementation "com.github.chrisbanes:PhotoView:$photoView_version"
 
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
@@ -57,6 +57,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     implementation "gun0912.ted:tedpermission:$tedPermission"
+    implementation 'com.github.wooooooak:kcsimplealertview:$kcSimpleAlertView'
 
     // koin
     implementation "org.koin:koin-core:$koin_version"

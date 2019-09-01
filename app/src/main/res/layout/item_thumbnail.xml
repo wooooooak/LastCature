@@ -11,14 +11,19 @@
             name="onClickListener"
             type="android.view.View.OnClickListener" />
         <variable
+            name="onLongClickListener"
+            type="android.view.View.OnLongClickListener" />
+        <variable
             name="time"
             type="String" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="1dp"
+        android:onLongClickListener="@{onLongClickListener}"
         android:onClick="@{onClickListener}">
 
         <ImageView

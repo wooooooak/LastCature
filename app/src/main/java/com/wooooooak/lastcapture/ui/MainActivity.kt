@@ -30,20 +30,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigationView.setupWithNavController(navController)
 
-//        binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-//            item.actionView?.setBackgroundResource(R.drawable.border_red)
-//            when (item.itemId) {
-//                R.id.showingLastThreeFragment -> {
-//                    navController.navigateUp()
-//                }
-//                R.id.screenShotAlbumFragment -> {
-//                    val direction =  ShowingLastThreeFragmentDirections
-//                        .actionShowingLastThreeFragmentToScreenShotAlbumFragment()
-//                    navController.navigate(direction)
-//                }
-//            }
-//            true
-//        }
     }
 
     private fun checkPermission() {
