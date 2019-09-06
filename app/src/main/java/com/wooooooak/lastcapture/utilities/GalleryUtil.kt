@@ -12,10 +12,10 @@ class GalleryUtil {
 
     companion object {
         private val uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        private val INDEX_MEDIA_URI = MediaStore.MediaColumns.DATA
-        private val INDEX_ALBUM_NAME = MediaStore.Images.Media.BUCKET_DISPLAY_NAME
-        private val INDEX_IMAGE_NAME = MediaStore.Images.Media.DISPLAY_NAME
-        private val INDEX_DATE_TAKEN = MediaStore.Images.Media.DATE_TAKEN
+        private const val INDEX_MEDIA_URI = MediaStore.MediaColumns.DATA
+        private const val INDEX_ALBUM_NAME = MediaStore.Images.Media.BUCKET_DISPLAY_NAME
+        private const val INDEX_IMAGE_NAME = MediaStore.Images.Media.DISPLAY_NAME
+        private const val INDEX_DATE_TAKEN = MediaStore.Images.Media.DATE_TAKEN
         private val orderOption = "$INDEX_DATE_TAKEN DESC"
 
         fun getAllAlbumList(application: Application): List<Album> {

@@ -13,23 +13,20 @@ class ImageViewerViewModel(private val repository: ScreenShotRepository) : ViewM
 
     private val _defaultFloatingButtonVisibility =
         MutableLiveData<Boolean>().apply { value = false }
-    val defaultFloatingButtonVisibility: LiveData<Boolean>
-        get() = _defaultFloatingButtonVisibility
+    val defaultFloatingButtonVisibility: LiveData<Boolean> = _defaultFloatingButtonVisibility
 
     private val _floatingButtonVisibility = MutableLiveData<Boolean>().apply { value = false }
-    val floatingButtonVisibility: LiveData<Boolean>
-        get() = _floatingButtonVisibility
+    val floatingButtonVisibility: LiveData<Boolean> = _floatingButtonVisibility
 
     private val _showingCount = MutableLiveData<Int>().apply { value = screenShotCount }
-    val showingCount: LiveData<Int>
-        get() = _showingCount
+    val showingCount: LiveData<Int> = _showingCount
 
     val screenShots = Transformations.map(_showingCount) {
         repository.getScreenShot(it, selectedFolderUriSet)
     }
 
     fun refreshItem() {
-        _showingCount.value= screenShotCount
+        _showingCount.value = screenShotCount
     }
 
     fun setShowingCount(value: Int) {
