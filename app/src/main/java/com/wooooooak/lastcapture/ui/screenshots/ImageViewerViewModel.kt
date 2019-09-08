@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.crashlytics.android.Crashlytics
 import com.wooooooak.lastcapture.MyApplication
 import com.wooooooak.lastcapture.data.ScreenShotRepository
 
