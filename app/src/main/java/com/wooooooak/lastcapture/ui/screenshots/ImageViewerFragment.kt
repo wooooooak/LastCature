@@ -20,13 +20,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ShowingLastThreeFragment : Fragment() {
 
     private lateinit var binding: FragmentImageViewerBinding
+    private lateinit var adapter: ScreenShotAdapter
     private val imageViewerViewModel: ImageViewerViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val adapter = ScreenShotAdapter(requireActivity(), imageViewerViewModel)
+        adapter = ScreenShotAdapter(requireActivity(), imageViewerViewModel)
         binding = FragmentImageViewerBindingImpl.inflate(inflater, container, false).apply {
             setVariable(BR.viewModel, imageViewerViewModel)
             setRecyclerView(this, adapter)
@@ -34,26 +35,33 @@ class ShowingLastThreeFragment : Fragment() {
             executePendingBindings()
         }
 
-        subscribeUi(adapter)
-
-        binding.onClickDefaultFloatingButton = View.OnClickListener {
-            imageViewerViewModel.changeFloatingButtonVisibility()
-        }
-
-        binding.onClickSettingCountButton = View.OnClickListener {
-            val view = it as ExtendedFloatingActionButton
-            val count = view.text.toString().toInt()
-            imageViewerViewModel.setShowingCount(count)
-            imageViewerViewModel.changeFloatingButtonVisibility()
-        }
+        subscribeViewModel()
+        subscribeUi()
 
         return binding.root
     }
 
-    private fun subscribeUi(adapter: ScreenShotAdapter) {
-        imageViewerViewModel.screenShots.observe(viewLifecycleOwner, Observer { screenShots ->
-            adapter.submitList(screenShots)
-        })
+    private fun subscribeViewModel() {
+        with(imageViewerViewModel) {
+            screenShots.observe(viewLifecycleOwner, Observer { screenShots ->
+                adapter.submitList(screenShots)
+            })
+        }
+    }
+
+    private fun subscribeUi() {
+        with(binding) {
+            onClickDefaultFloatingButton = View.OnClickListener {
+                imageViewerViewModel.changeFloatingButtonVisibility()
+            }
+
+            onClickSettingCountButton = View.OnClickListener {
+                val view = it as ExtendedFloatingActionButton
+                val count = view.text.toString().toInt()
+                imageViewerViewModel.setShowingCount(count)
+                imageViewerViewModel.changeFloatingButtonVisibility()
+            }
+        }
     }
 
     private fun setRecyclerView(binding: FragmentImageViewerBinding, adapter: ScreenShotAdapter) {

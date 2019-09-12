@@ -24,24 +24,21 @@ class AlbumSelectorFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val adapter = AlbumListAdapter()
-
+        val adapter = AlbumListAdapter(requireContext())
         binding = FragmentScreenShotAlbumBinding.inflate(inflater, container, false).apply {
             setVariable(BR.viewModel, viewModel)
             albumListView.adapter = adapter
             albumListView.layoutManager = GridLayoutManager(requireContext(), 2)
         }
 
-        subscribeUi(viewModel, adapter)
+        subscribeViewModel(viewModel, adapter)
         return binding.root
     }
 
-    private fun subscribeUi(viewModel: AlbumSelectorViewModel, adapter: AlbumListAdapter) {
+    private fun subscribeViewModel(viewModel: AlbumSelectorViewModel, adapter: AlbumListAdapter) {
         viewModel.albumList.observe(this, Observer {
             adapter.submitList(it)
-            Log.d("AlbumSelector", it.toString())
         })
-
     }
 
 }

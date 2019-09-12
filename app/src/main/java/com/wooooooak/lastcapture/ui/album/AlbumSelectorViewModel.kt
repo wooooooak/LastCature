@@ -14,8 +14,7 @@ class AlbumSelectorViewModel(application: Application) : AndroidViewModel(applic
 
     val TAG = "AlbumSelectorView"
     private val _albumList = MutableLiveData<List<Album>>()
-    val albumList: LiveData<List<Album>>
-        get() = _albumList
+    val albumList: LiveData<List<Album>> = _albumList
 
     init {
         viewModelScope.launch(Dispatchers.IO) {

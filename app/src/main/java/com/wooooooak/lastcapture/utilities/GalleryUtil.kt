@@ -22,22 +22,24 @@ class GalleryUtil {
             val projection = arrayOf(INDEX_MEDIA_URI, INDEX_ALBUM_NAME, INDEX_IMAGE_NAME)
             val cursor = application.contentResolver.query(uri, projection, null, null, orderOption)
             var albumList: List<Album> = listOf()
-            if (cursor.moveToNext()) {
-                val totalImageList = generateSequence { if (cursor.moveToNext()) cursor else null }
-                    .map { getImage(it) }
-                    .toList()
+            cursor?.let {
+                if (cursor.moveToNext()) {
+                    val totalImageList =
+                        generateSequence { if (cursor.moveToNext()) cursor else null }
+                            .map { getImage(it) }
+                            .toList()
 
-                albumList = totalImageList.asSequence()
-                    .groupBy { image -> image.albumName }
-                    .toSortedMap()
-                    .map { entry -> getAlbum(entry) }
-                    .toList()
+                    albumList = totalImageList.asSequence()
+                        .groupBy { image -> image.albumName }
+                        .toSortedMap()
+                        .map { entry -> getAlbum(entry) }
+                        .toList()
+                }
             }
             return albumList
         }
 
         private fun getAlbum(entry: Map.Entry<String, List<Image>>): Album {
-
             val albumUriPath = entry.value[0].uri.path?.substringBeforeLast("/") ?: ""
             return Album(entry.key, albumUriPath, entry.value[0].uri, entry.value)
         }

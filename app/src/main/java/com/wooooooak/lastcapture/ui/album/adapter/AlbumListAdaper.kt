@@ -1,8 +1,10 @@
 package com.wooooooak.lastcapture.ui.album.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +15,9 @@ import com.wooooooak.lastcapture.data.Album
 import com.wooooooak.lastcapture.databinding.ItemAlbumBinding
 import kotlinx.android.synthetic.main.item_album.view.*
 
-class AlbumListAdapter : ListAdapter<Album, AlbumListAdapter.ViewHolder>(AlbumDiffCallback()) {
+class AlbumListAdapter(private val context: Context) : ListAdapter<Album, AlbumListAdapter
+.ViewHolder>
+    (AlbumDiffCallback()) {
     private val pref = MyApplication.pref
     private val selectedAlbumSet = mutableSetOf<Int>() //set 으로 하면 해결은 될듯
 
@@ -68,6 +72,5 @@ class AlbumListAdapter : ListAdapter<Album, AlbumListAdapter.ViewHolder>(AlbumDi
 
 private class AlbumDiffCallback : DiffUtil.ItemCallback<Album>() {
     override fun areItemsTheSame(oldItem: Album, newItem: Album) = oldItem.name == newItem.name
-
     override fun areContentsTheSame(oldItem: Album, newItem: Album) = oldItem == newItem
 }
