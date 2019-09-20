@@ -1,7 +1,5 @@
 package com.wooooooak.lastcapture.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.wooooooak.lastcapture.utilities.getRecentImageList
 import java.io.File
 
@@ -13,9 +11,8 @@ class ScreenShotRepository {
             screenShots.addAll(0, File(imagePath).getRecentImageList(count))
         }
 
-        val targetScreenShot = screenShots.apply {
+        return screenShots.apply {
             sortBy { it.lastModified() }
         }.takeLast(count).reversed()
-        return  targetScreenShot
     }
 }

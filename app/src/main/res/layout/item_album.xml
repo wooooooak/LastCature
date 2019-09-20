@@ -23,6 +23,7 @@
             android:layout_height="200dp"
             android:cropToPadding="false"
             android:padding="4dp"
+            tools:src="@drawable/ic_launcher_foreground"
             app:check="@{album.isSelected}"
             android:scaleType="centerCrop"
             app:imageFromUri="@{album.thumbnail}"
