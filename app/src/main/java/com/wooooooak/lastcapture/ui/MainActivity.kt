@@ -6,6 +6,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
 import com.wooooooak.lastcapture.R
 import com.wooooooak.lastcapture.databinding.ActivityMainBinding
@@ -19,10 +21,20 @@ class MainActivity : AppCompatActivity() {
         checkPermission()
         super.onCreate(savedInstanceState)
 
+        MobileAds.initialize(this) {}
+//        val adView = adView
+//        adView.adSize = AdSize.SMART_BANNER
+//        adView.adUnitId = "ca-app-pub-3189199434233237/4177016566"
+
+
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(
             this,
             R.layout.activity_main
         )
+
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
+
         navController = Navigation.findNavController(
             this,
             R.id.navigation_host_fragment
