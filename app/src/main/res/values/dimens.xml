@@ -5,4 +5,7 @@
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">18sp</dimen>
     <dimen name="design_bottom_navigation_height" tools:override="true">56dp</dimen>
 
+    <dimen name="alert_view_title">15sp</dimen>
+    <dimen name="alert_view_message">13sp</dimen>
+
 </resources>

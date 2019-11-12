@@ -3,7 +3,6 @@ package com.wooooooak.lastcapture.ui.screenshots.adater
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +20,6 @@ import com.wooooooak.lastcapture.ui.screenshots.ImageViewerViewModel
 import com.wooooooak.lastcapture.utilities.lastModifiedTime
 import wooooooak.dev.kcsimplealertview.woakalertview.SimpleAlertView
 import java.io.File
-import java.nio.file.Files
 
 class ScreenShotAdapter(
     private val activity: Activity,
@@ -68,13 +66,18 @@ class ScreenShotAdapter(
     private fun showDeleteAlertView(file: File, view: View) {
         SimpleAlertView(activity as AppCompatActivity) {
             title {
-                text = "해당 이미지를\n삭제하시겠습니까?"
+                text = activity.resources.getString(R.string.ask_delete_title_1)
+                textSize = activity.resources.getDimension(R.dimen.alert_view_title)
+            }
+            message {
+                text = activity.resources.getString(R.string.ask_delete_title_2)
+                textSize = activity.resources.getDimension(R.dimen.alert_view_message)
             }
             button {
-                text = "취소"
+                text = activity.resources.getString(R.string.cancel)
             }
             button {
-                text = "삭제"
+                text = activity.resources.getString(R.string.delete)
                 textColor = ContextCompat.getColor(activity, R.color.colorAccent)
                 onClick = {
                     if (file.exists()) {
@@ -86,10 +89,16 @@ class ScreenShotAdapter(
                                     Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)
                                 )
                             )
-                            Snackbar.make(view, "삭제 완료", Snackbar.LENGTH_SHORT).show()
+                            Snackbar.make(
+                                view, activity.resources.getString(R.string.delete_success),
+                                Snackbar.LENGTH_SHORT
+                            ).show()
                         }
                     } else {
-                        Snackbar.make(view, "존재하지 않는 파일입니다.", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(
+                            view, activity.resources.getString(R.string.not_exist_file), Snackbar
+                                .LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
