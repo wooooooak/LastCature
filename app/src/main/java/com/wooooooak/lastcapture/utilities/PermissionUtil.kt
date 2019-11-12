@@ -24,7 +24,8 @@ class PermissionUtil(var context: Context) {
             .setPermissionListener(permissionListener)
             .setDeniedMessage("[설정] > [권한] 에서 권한을 허용하시면 앱을 사용 하실 수 있습니다.")
             .setPermissions(
-                Manifest.permission.READ_EXTERNAL_STORAGE
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
             ).check()
     }
 }

@@ -22,10 +22,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         MobileAds.initialize(this) {}
-//        val adView = adView
-//        adView.adSize = AdSize.SMART_BANNER
-//        adView.adUnitId = "ca-app-pub-3189199434233237/4177016566"
-
 
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(
             this,

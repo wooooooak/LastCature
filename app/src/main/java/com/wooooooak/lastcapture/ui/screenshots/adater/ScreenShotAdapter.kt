@@ -3,6 +3,7 @@ package com.wooooooak.lastcapture.ui.screenshots.adater
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ import com.wooooooak.lastcapture.ui.screenshots.ImageViewerViewModel
 import com.wooooooak.lastcapture.utilities.lastModifiedTime
 import wooooooak.dev.kcsimplealertview.woakalertview.SimpleAlertView
 import java.io.File
+import java.nio.file.Files
 
 class ScreenShotAdapter(
     private val activity: Activity,
@@ -76,15 +78,16 @@ class ScreenShotAdapter(
                 textColor = ContextCompat.getColor(activity, R.color.colorAccent)
                 onClick = {
                     if (file.exists()) {
-                        file.delete()
-                        imageViewerViewModel.refreshItem()
-                        activity.baseContext.sendBroadcast(
-                            Intent(
-                                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri
-                                    .fromFile(file)
+                        val isDeletedSuccessfully = file.delete()
+                        if (isDeletedSuccessfully) {
+                            imageViewerViewModel.refreshItem()
+                            activity.baseContext.sendBroadcast(
+                                Intent(
+                                    Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)
+                                )
                             )
-                        )
-                        Snackbar.make(view, "삭제 완료", Snackbar.LENGTH_SHORT).show()
+                            Snackbar.make(view, "삭제 완료", Snackbar.LENGTH_SHORT).show()
+                        }
                     } else {
                         Snackbar.make(view, "존재하지 않는 파일입니다.", Snackbar.LENGTH_SHORT).show()
                     }
