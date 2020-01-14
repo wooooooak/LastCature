@@ -1,10 +1,9 @@
-package com.wooooooak.lastcapture.data
+package com.wooooooak.lastcapture.data.repository
 
-import com.wooooooak.lastcapture.utilities.getRecentImageList
+import com.wooooooak.lastcapture.utilities.ext.getRecentImageList
 import java.io.File
 
 class ScreenShotRepository {
-
     fun getScreenShot(count: Int, folderUriSet: Set<String>): List<File> {
         val screenShots = mutableListOf<File>()
         folderUriSet.forEach { imagePath ->

@@ -1,4 +1,4 @@
-package com.wooooooak.lastcapture.utilities
+package com.wooooooak.lastcapture.utilities.ext
 
 import java.io.File
 import java.text.SimpleDateFormat

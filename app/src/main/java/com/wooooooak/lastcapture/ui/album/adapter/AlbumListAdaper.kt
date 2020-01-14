@@ -1,70 +1,48 @@
 package com.wooooooak.lastcapture.ui.album.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.wooooooak.lastcapture.MyApplication
-import com.wooooooak.lastcapture.R
-import com.wooooooak.lastcapture.adapter.setBackgroundResource
-import com.wooooooak.lastcapture.data.Album
+import com.wooooooak.lastcapture.data.model.Album
 import com.wooooooak.lastcapture.databinding.ItemAlbumBinding
-import kotlinx.android.synthetic.main.item_album.view.*
 
-class AlbumListAdapter(private val context: Context) : ListAdapter<Album, AlbumListAdapter
-.ViewHolder>
-    (AlbumDiffCallback()) {
+class AlbumListAdapter : ListAdapter<Album, AlbumListAdapter.ViewHolder>(AlbumDiffCallback()) {
+
     private val pref = MyApplication.pref
-    private val selectedAlbumSet = mutableSetOf<Int>() //set 으로 하면 해결은 될듯
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            ItemAlbumBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
+        ItemAlbumBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val album = getItem(position)
-        if (album.albumUriPath in pref.selectedFolderUris) {
-            selectedAlbumSet.add(position)
-            album.isSelected = true
-        } else {
-            selectedAlbumSet.remove(position)
-            album.isSelected = false
-        }
-        holder.bind(album, createOnClickListener(album, position))
+        album.isSelected = album.thumbnailUri.toString() in pref.selectedThumbnailUris
+        holder.bind(album)
     }
 
-    private fun createOnClickListener(album: Album, position: Int): View.OnClickListener {
-        return View.OnClickListener {
-            if (position in selectedAlbumSet) {
-                pref.applyFolder { remove(album.albumUriPath) }
-                it.setBackgroundResource(0)
-                selectedAlbumSet.remove(position)
-                album.isSelected = false
-            } else {
-                pref.applyFolder { add(album.albumUriPath) }
-                it.setBackgroundResource(R.drawable.border_red)
-                selectedAlbumSet.add(position)
-                album.isSelected = true
-            }
+    private fun createOnClickListener(binding: ItemAlbumBinding, _album: Album) = View.OnClickListener {
+        if (_album.thumbnailUri.toString() in pref.selectedThumbnailUris) {
+            pref.applyFolder { remove(_album.thumbnailUri.toString()) }
+        } else {
+            pref.applyFolder { add(_album.thumbnailUri.toString()) }
+        }
+        with(binding) {
+            _album.isSelected = !_album.isSelected
+            album = _album
+            executePendingBindings()
         }
     }
 
     inner class ViewHolder(val binding: ItemAlbumBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(album: Album, listener: View.OnClickListener) {
+        fun bind(_album: Album) {
             binding.apply {
-                this.album = album
-                onClickListener = listener
-                setBackgroundResource(binding.root.imageView, album.isSelected)
+                album = _album
+                onClickListener = createOnClickListener(binding, _album)
+                executePendingBindings()
             }
         }
     }

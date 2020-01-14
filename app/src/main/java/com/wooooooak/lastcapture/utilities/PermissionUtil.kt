@@ -7,7 +7,7 @@ import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import java.util.ArrayList
 
-class PermissionUtil(var context: Context) {
+class PermissionUtil(val context: Context) {
     fun checkExtStoragePermission(onSuccess: () -> Unit, onFailure: () -> Unit) {
         val permissionListener: PermissionListener = object : PermissionListener {
             @SuppressLint("MissingPermission")

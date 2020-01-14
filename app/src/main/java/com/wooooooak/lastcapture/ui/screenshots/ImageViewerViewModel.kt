@@ -4,13 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.crashlytics.android.Crashlytics
 import com.wooooooak.lastcapture.MyApplication
-import com.wooooooak.lastcapture.data.ScreenShotRepository
+import com.wooooooak.lastcapture.data.repository.ScreenShotRepository
 
 class ImageViewerViewModel(private val repository: ScreenShotRepository) : ViewModel() {
     private val screenShotCount = MyApplication.pref.screenShotCount
-    private val selectedFolderUriSet = MyApplication.pref.selectedFolderUris
+    private val selectedFolderUriSet = MyApplication.pref.selectedThumbnailUris
 
     private val _defaultFloatingButtonVisibility =
         MutableLiveData<Boolean>().apply { value = false }

@@ -17,7 +17,7 @@ import com.wooooooak.lastcapture.R
 import com.wooooooak.lastcapture.databinding.ItemThumbnailBinding
 import com.wooooooak.lastcapture.ui.screenshots.DetailScreenShotActivity
 import com.wooooooak.lastcapture.ui.screenshots.ImageViewerViewModel
-import com.wooooooak.lastcapture.utilities.lastModifiedTime
+import com.wooooooak.lastcapture.utilities.ext.lastModifiedTime
 import wooooooak.dev.kcsimplealertview.woakalertview.SimpleAlertView
 import java.io.File
 

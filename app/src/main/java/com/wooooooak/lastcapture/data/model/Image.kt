@@ -1,4 +1,4 @@
-package com.wooooooak.lastcapture.data
+package com.wooooooak.lastcapture.data.model
 
 import android.net.Uri
 

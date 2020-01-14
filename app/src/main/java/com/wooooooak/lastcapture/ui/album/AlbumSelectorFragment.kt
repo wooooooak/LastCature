@@ -15,25 +15,35 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class AlbumSelectorFragment : Fragment() {
 
     private lateinit var binding: FragmentScreenShotAlbumBinding
+
     private val viewModel: AlbumSelectorViewModel by viewModel()
+
+    private val adapter: AlbumListAdapter by lazy {
+        AlbumListAdapter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val adapter = AlbumListAdapter(requireContext())
         binding = FragmentScreenShotAlbumBinding.inflate(inflater, container, false).apply {
             viewModel = viewModel
             albumListView.adapter = adapter
             albumListView.layoutManager = GridLayoutManager(requireContext(), 2)
+            lifecycleOwner = this@AlbumSelectorFragment
+            executePendingBindings()
         }
 
-        subscribeViewModel(viewModel, adapter)
         return binding.root
     }
 
-    private fun subscribeViewModel(viewModel: AlbumSelectorViewModel, adapter: AlbumListAdapter) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        subscribeViewModel()
+    }
+
+    private fun subscribeViewModel() {
         viewModel.albumList.observe(this, Observer {
             adapter.submitList(it)
         })

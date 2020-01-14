@@ -13,8 +13,8 @@ class LCPreference internal constructor(context: Context) {
 
     private val pref = context.getSharedPreferences(FILE_NAME, 0)
 
-    var selectedFolderUris: Set<String>
-        get() = pref.getStringSet(SELECTED_FOLDER, setOf(DEFAULT_FOLDER_URI))
+    var selectedThumbnailUris: Set<String>
+        get() = pref.getStringSet(SELECTED_FOLDER, setOf(DEFAULT_FOLDER_URI)) as Set<String>
         set(value) = pref.edit {
             putStringSet(SELECTED_FOLDER, value)
         }
@@ -26,10 +26,15 @@ class LCPreference internal constructor(context: Context) {
         }
 
     fun applyFolder(func: MutableSet<String>.() -> Unit) {
-        val newSelectedFolderUriSet = selectedFolderUris.toMutableSet().apply {
+        val newSelectedFolderUriSet = selectedThumbnailUris.toMutableSet().apply {
             func()
         }
-        selectedFolderUris = newSelectedFolderUriSet
+        selectedThumbnailUris = newSelectedFolderUriSet
+    }
+
+    fun clear() {
+        selectedThumbnailUris = setOf()
+        screenShotCount = 0
     }
 
 }
