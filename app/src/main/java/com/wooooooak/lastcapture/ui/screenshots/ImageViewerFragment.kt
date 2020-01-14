@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.wooooooak.lastcapture.BR
+import com.orhanobut.logger.Logger
 import com.wooooooak.lastcapture.databinding.FragmentImageViewerBinding
 import com.wooooooak.lastcapture.databinding.FragmentImageViewerBindingImpl
 import com.wooooooak.lastcapture.ui.screenshots.adater.ScreenShotAdapter
@@ -20,31 +20,34 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ShowingLastThreeFragment : Fragment() {
 
     private lateinit var binding: FragmentImageViewerBinding
-    private lateinit var adapter: ScreenShotAdapter
+    private lateinit var screenShotAdapter: ScreenShotAdapter
     private val imageViewerViewModel: ImageViewerViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        adapter = ScreenShotAdapter(requireActivity(), imageViewerViewModel)
+        screenShotAdapter = ScreenShotAdapter(requireActivity(), imageViewerViewModel)
         binding = FragmentImageViewerBindingImpl.inflate(inflater, container, false).apply {
-            setVariable(BR.viewModel, imageViewerViewModel)
-            setRecyclerView(this, adapter)
+            viewModel = imageViewerViewModel
             lifecycleOwner = this@ShowingLastThreeFragment
             executePendingBindings()
         }
+        setRecyclerView()
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         subscribeViewModel()
         subscribeUi()
-
-        return binding.root
     }
 
     private fun subscribeViewModel() {
         with(imageViewerViewModel) {
             screenShots.observe(viewLifecycleOwner, Observer { screenShots ->
-                adapter.submitList(screenShots)
+                Logger.d(screenShots)
+                screenShotAdapter.submitList(screenShots)
             })
         }
     }
@@ -64,13 +67,10 @@ class ShowingLastThreeFragment : Fragment() {
         }
     }
 
-    private fun setRecyclerView(binding: FragmentImageViewerBinding, adapter: ScreenShotAdapter) {
+    private fun setRecyclerView() {
         with(binding) {
-            screenshotList.adapter = adapter
-            screenshotList.layoutManager = StaggeredGridLayoutManager(
-                2,
-                StaggeredGridLayoutManager.VERTICAL
-            )
+            screenshotList.adapter = screenShotAdapter
+            screenshotList.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             screenshotList.screenshot_list.addOnScrollListener(object :
                 RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

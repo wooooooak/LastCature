@@ -7,7 +7,6 @@ import android.provider.MediaStore
 import com.orhanobut.logger.Logger
 import com.wooooooak.lastcapture.data.model.Album
 import com.wooooooak.lastcapture.data.model.Image
-import java.io.File
 
 private val uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
 private const val INDEX_MEDIA_ID = MediaStore.Images.Media._ID
@@ -37,12 +36,15 @@ fun getAllAlbumList(application: Application): List<Album> {
     return albumList
 }
 
+// entry.key = album 이름
+// entry.value = album안에 image리스트
 private fun getAlbum(entry: Map.Entry<String, List<Image>>): Album {
-    val albumUriPath = entry.value[0].uri.path?.substringBeforeLast("/") ?: ""
+    val albumUriPath = entry.value[0].uri.toString()
+    Logger.d(entry)
     return Album(
         name = entry.key,
-        albumUriPath =  albumUriPath,
-        thumbnailUri =  entry.value[0].uri,
+        albumUriPath = albumUriPath,
+        thumbnailUri = entry.value[0].uri,
         images = entry.value
     )
 }

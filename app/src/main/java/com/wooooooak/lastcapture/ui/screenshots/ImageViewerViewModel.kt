@@ -8,17 +8,18 @@ import com.wooooooak.lastcapture.MyApplication
 import com.wooooooak.lastcapture.data.repository.ScreenShotRepository
 
 class ImageViewerViewModel(private val repository: ScreenShotRepository) : ViewModel() {
-    private val screenShotCount = MyApplication.pref.screenShotCount
-    private val selectedFolderUriSet = MyApplication.pref.selectedThumbnailUris
 
-    private val _defaultFloatingButtonVisibility =
-        MutableLiveData<Boolean>().apply { value = false }
+    private val screenShotCount = MyApplication.pref.screenShotCount
+
+    private val selectedFolderUriSet = MyApplication.pref.selectedFolderName
+
+    private val _defaultFloatingButtonVisibility = MutableLiveData<Boolean>(false)
     val defaultFloatingButtonVisibility: LiveData<Boolean> = _defaultFloatingButtonVisibility
 
-    private val _floatingButtonVisibility = MutableLiveData<Boolean>().apply { value = false }
+    private val _floatingButtonVisibility = MutableLiveData<Boolean>(false)
     val floatingButtonVisibility: LiveData<Boolean> = _floatingButtonVisibility
 
-    private val _showingCount = MutableLiveData<Int>().apply { value = screenShotCount }
+    private val _showingCount = MutableLiveData<Int>(if (screenShotCount == 0) 10 else screenShotCount)
     val showingCount: LiveData<Int> = _showingCount
 
     val screenShots = Transformations.map(_showingCount) {

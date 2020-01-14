@@ -27,20 +27,24 @@ class AlbumSelectorFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentScreenShotAlbumBinding.inflate(inflater, container, false).apply {
+        binding = FragmentScreenShotAlbumBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initBinding()
+        subscribeViewModel()
+    }
+
+    private fun initBinding() {
+        with(binding) {
             viewModel = viewModel
             albumListView.adapter = adapter
             albumListView.layoutManager = GridLayoutManager(requireContext(), 2)
             lifecycleOwner = this@AlbumSelectorFragment
             executePendingBindings()
         }
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        subscribeViewModel()
     }
 
     private fun subscribeViewModel() {

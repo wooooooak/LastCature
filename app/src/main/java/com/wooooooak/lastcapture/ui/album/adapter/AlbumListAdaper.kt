@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.orhanobut.logger.Logger
 import com.wooooooak.lastcapture.MyApplication
 import com.wooooooak.lastcapture.data.model.Album
 import com.wooooooak.lastcapture.databinding.ItemAlbumBinding
@@ -20,15 +21,15 @@ class AlbumListAdapter : ListAdapter<Album, AlbumListAdapter.ViewHolder>(AlbumDi
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val album = getItem(position)
-        album.isSelected = album.thumbnailUri.toString() in pref.selectedThumbnailUris
+        album.isSelected = album.name in pref.selectedFolderName
         holder.bind(album)
     }
 
     private fun createOnClickListener(binding: ItemAlbumBinding, _album: Album) = View.OnClickListener {
-        if (_album.thumbnailUri.toString() in pref.selectedThumbnailUris) {
-            pref.applyFolder { remove(_album.thumbnailUri.toString()) }
+        if (_album.name in pref.selectedFolderName) {
+            pref.applyFolder { remove(_album.name) }
         } else {
-            pref.applyFolder { add(_album.thumbnailUri.toString()) }
+            pref.applyFolder { add(_album.name) }
         }
         with(binding) {
             _album.isSelected = !_album.isSelected

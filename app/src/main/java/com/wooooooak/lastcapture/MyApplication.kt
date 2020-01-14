@@ -3,11 +3,13 @@ package com.wooooooak.lastcapture
 import android.app.Application
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.FormatStrategy
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
 import com.wooooooak.lastcapture.utilities.LCPreference
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+
 
 class MyApplication: Application() {
     private lateinit var firebaseAnalytics: FirebaseAnalytics
@@ -28,6 +30,10 @@ class MyApplication: Application() {
     }
 
     private fun initLogger() {
-        Logger.addLogAdapter(AndroidLogAdapter())
+        val formatStrategy: FormatStrategy = PrettyFormatStrategy.newBuilder()
+            .showThreadInfo(false) // (Optional) Whether to show thread info or not. Default true
+            .methodCount(1)
+            .build()
+        Logger.addLogAdapter(AndroidLogAdapter(formatStrategy))
     }
 }
