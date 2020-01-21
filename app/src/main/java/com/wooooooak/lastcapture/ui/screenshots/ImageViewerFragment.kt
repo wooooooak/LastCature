@@ -27,47 +27,49 @@ class ShowingLastThreeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        screenShotAdapter = ScreenShotAdapter(requireActivity(), imageViewerViewModel)
-        binding = FragmentImageViewerBindingImpl.inflate(inflater, container, false).apply {
-            viewModel = imageViewerViewModel
-            lifecycleOwner = this@ShowingLastThreeFragment
-            executePendingBindings()
-        }
-        setRecyclerView()
+        binding = FragmentImageViewerBindingImpl.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initBinding()
+        setRecyclerView()
         subscribeViewModel()
         subscribeUi()
     }
 
-    private fun subscribeViewModel() {
-        with(imageViewerViewModel) {
-            screenShots.observe(viewLifecycleOwner, Observer { screenShots ->
-                Logger.d(screenShots)
-                screenShotAdapter.submitList(screenShots)
-            })
-        }
-    }
-
-    private fun subscribeUi() {
+    private fun initBinding() {
         with(binding) {
+            viewModel = imageViewerViewModel
+            // TODO click 바인딩은 뷰모델에 선언하자.
             onClickDefaultFloatingButton = View.OnClickListener {
                 imageViewerViewModel.changeFloatingButtonVisibility()
             }
-
             onClickSettingCountButton = View.OnClickListener {
                 val view = it as ExtendedFloatingActionButton
                 val count = view.text.toString().toInt()
                 imageViewerViewModel.setShowingCount(count)
                 imageViewerViewModel.changeFloatingButtonVisibility()
             }
+            lifecycleOwner = this@ShowingLastThreeFragment
+            executePendingBindings()
         }
     }
 
+    private fun subscribeViewModel() {
+        with(imageViewerViewModel) {
+            screenShots.observe(viewLifecycleOwner, Observer { screenShotsUri ->
+                screenShotAdapter.submitList(screenShotsUri)
+            })
+        }
+    }
+
+    private fun subscribeUi() {
+    }
+
     private fun setRecyclerView() {
+        screenShotAdapter = ScreenShotAdapter(requireActivity(), imageViewerViewModel)
         with(binding) {
             screenshotList.adapter = screenShotAdapter
             screenshotList.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)

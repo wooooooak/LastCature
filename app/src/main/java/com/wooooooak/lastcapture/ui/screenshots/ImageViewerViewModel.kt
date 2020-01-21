@@ -1,13 +1,15 @@
 package com.wooooooak.lastcapture.ui.screenshots
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.wooooooak.lastcapture.MyApplication
+import com.wooooooak.lastcapture.data.model.ScreenShot
 import com.wooooooak.lastcapture.data.repository.ScreenShotRepository
 
-class ImageViewerViewModel(private val repository: ScreenShotRepository) : ViewModel() {
+class ImageViewerViewModel(application: Application, private val repository: ScreenShotRepository) : ViewModel() {
 
     private val screenShotCount = MyApplication.pref.screenShotCount
 
@@ -23,7 +25,11 @@ class ImageViewerViewModel(private val repository: ScreenShotRepository) : ViewM
     val showingCount: LiveData<Int> = _showingCount
 
     val screenShots = Transformations.map(_showingCount) {
-        repository.getScreenShot(it, selectedFolderUriSet)
+        try {
+            repository.getScreenShot(application, it, selectedFolderUriSet)
+        } catch (e: Exception) {
+            listOf<ScreenShot>()
+        }
     }
 
     fun refreshItem() {

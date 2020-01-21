@@ -9,6 +9,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
+import com.orhanobut.logger.Logger
 import com.wooooooak.lastcapture.R
 import com.wooooooak.lastcapture.databinding.ActivityMainBinding
 import com.wooooooak.lastcapture.utilities.PermissionUtil
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Logger.d("onCreate MainActivity")
         checkPermission()
         super.onCreate(savedInstanceState)
 
@@ -37,7 +39,6 @@ class MainActivity : AppCompatActivity() {
         )
 
         binding.bottomNavigationView.setupWithNavController(navController)
-
     }
 
     private fun checkPermission() {

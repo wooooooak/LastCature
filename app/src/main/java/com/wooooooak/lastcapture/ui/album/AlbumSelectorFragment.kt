@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.wooooooak.lastcapture.databinding.FragmentScreenShotAlbumBinding
 import com.wooooooak.lastcapture.ui.album.adapter.AlbumListAdapter
+import com.wooooooak.lastcapture.utilities.PermissionUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AlbumSelectorFragment : Fragment() {
@@ -27,6 +28,7 @@ class AlbumSelectorFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        PermissionUtil(requireContext()).checkExtStoragePermission({},{})
         binding = FragmentScreenShotAlbumBinding.inflate(inflater, container, false)
         return binding.root
     }

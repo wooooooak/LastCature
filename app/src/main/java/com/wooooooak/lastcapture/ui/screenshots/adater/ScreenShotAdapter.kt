@@ -14,26 +14,24 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.wooooooak.lastcapture.R
+import com.wooooooak.lastcapture.data.model.ScreenShot
 import com.wooooooak.lastcapture.databinding.ItemThumbnailBinding
 import com.wooooooak.lastcapture.ui.screenshots.DetailScreenShotActivity
 import com.wooooooak.lastcapture.ui.screenshots.ImageViewerViewModel
-import com.wooooooak.lastcapture.utilities.ext.lastModifiedTime
 import wooooooak.dev.kcsimplealertview.woakalertview.SimpleAlertView
 import java.io.File
 
 class ScreenShotAdapter(
     private val activity: Activity,
     private val imageViewerViewModel: ImageViewerViewModel
-) : ListAdapter<File, ScreenShotAdapter.ViewHolder>(ScreenShotDiffCallback()) {
+) : ListAdapter<ScreenShot, ScreenShotAdapter.ViewHolder>(ScreenShotDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            ItemThumbnailBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent, false
-            )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
+        ItemThumbnailBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
         )
-    }
+    )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val screenShot = getItem(position)
@@ -44,10 +42,10 @@ class ScreenShotAdapter(
         }
     }
 
-    private fun createOnClickListener(file: File): Pair<View.OnClickListener, View.OnLongClickListener> {
+    private fun createOnClickListener(screenShot: ScreenShot): Pair<View.OnClickListener, View.OnLongClickListener> {
         val onClickListener = View.OnClickListener {
             val intent = Intent(activity, DetailScreenShotActivity::class.java).apply {
-                putExtra(DetailScreenShotActivity.SHARED_FILE_PATH, file.path)
+                putExtra(DetailScreenShotActivity.SHARED_FILE_URI, screenShot.uri)
             }
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 activity, it.findViewById(R.id.thumbnail), "screenShot"
@@ -56,7 +54,8 @@ class ScreenShotAdapter(
         }
 
         val onLongClickListener = View.OnLongClickListener {
-            showDeleteAlertView(file, it)
+            // TODO 권한을 얻어 MediaStore로 삭제해야함
+//            showDeleteAlertView(screenShot, it)
             true
         }
 
@@ -112,20 +111,20 @@ class ScreenShotAdapter(
         fun bind(
             onClickListener: View.OnClickListener,
             onLongClickListener: View.OnLongClickListener,
-            item: File
+            item: ScreenShot
         ) {
             binding.apply {
                 screenShot = item
                 this.onClickListener = onClickListener
                 this.onLongClickListener = onLongClickListener
-                time = item.lastModifiedTime
+                executePendingBindings()
             }
         }
     }
 }
 
-private class ScreenShotDiffCallback : DiffUtil.ItemCallback<File>() {
-    override fun areItemsTheSame(oldItem: File, newItem: File) = oldItem.name == newItem.name
+private class ScreenShotDiffCallback : DiffUtil.ItemCallback<ScreenShot>() {
+    override fun areItemsTheSame(oldItem: ScreenShot, newItem: ScreenShot) = oldItem == newItem
 
-    override fun areContentsTheSame(oldItem: File, newItem: File) = oldItem == newItem
+    override fun areContentsTheSame(oldItem: ScreenShot, newItem: ScreenShot) = oldItem == newItem
 }

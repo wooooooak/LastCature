@@ -7,7 +7,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-    viewModel { ImageViewerViewModel(get()) }
+    viewModel { ImageViewerViewModel(get(), get()) }
     viewModel { AlbumSelectorViewModel(get()) }
 
     single { ScreenShotRepository() }

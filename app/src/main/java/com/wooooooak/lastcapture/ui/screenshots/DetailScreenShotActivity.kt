@@ -15,7 +15,7 @@ class DetailScreenShotActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initBinding()
-        val filePath = intent.extras?.get(SHARED_FILE_PATH) ?: ""
+        val filePath = intent.extras?.get(SHARED_FILE_URI) ?: ""
         val imageView = thumbnail
 
         Glide.with(imageView.context)
@@ -28,6 +28,6 @@ class DetailScreenShotActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val SHARED_FILE_PATH = "shared_file_path"
+        const val SHARED_FILE_URI = "shared_file_uri"
     }
 }

@@ -6,16 +6,13 @@
     <data>
         <variable
             name="screenShot"
-            type="java.io.File" />
+            type="com.wooooooak.lastcapture.data.model.ScreenShot" />
         <variable
             name="onClickListener"
             type="android.view.View.OnClickListener" />
         <variable
             name="onLongClickListener"
             type="android.view.View.OnLongClickListener" />
-        <variable
-            name="time"
-            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            app:imageFromLocalFile="@{screenShot}"
+            app:imageFromUri="@{screenShot.uri}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +43,7 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{time}"
+            android:text="@{screenShot.fileName}"
             tools:text="1일전"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/thumbnail"
