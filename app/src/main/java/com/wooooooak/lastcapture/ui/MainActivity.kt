@@ -18,27 +18,29 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        Logger.d("onCreate MainActivity")
         checkPermission()
         super.onCreate(savedInstanceState)
 
-        MobileAds.initialize(this) {}
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        initMobileAds()
+        initNavController()
+    }
 
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView(
-            this,
-            R.layout.activity_main
-        )
-
-        val adRequest = AdRequest.Builder().build()
-        binding.adView.loadAd(adRequest)
-
+    private fun initNavController() {
         navController = Navigation.findNavController(
             this,
             R.id.navigation_host_fragment
         )
-
         binding.bottomNavigationView.setupWithNavController(navController)
+    }
+
+    private fun initMobileAds() {
+        MobileAds.initialize(this) {}
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
     }
 
     private fun checkPermission() {
