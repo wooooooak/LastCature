@@ -2,10 +2,10 @@ package com.wooooooak.lastcapture
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.Text
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                             val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
                             bottomNavigationItem.forEach { screen ->
                                 BottomNavigationItem(
-                                    icon = { Icon(Icons.Filled.Favorite) },
+                                    icon = { Image(Icons.Filled.Favorite) },
                                     label = { Text(text = screen.name) },
                                     selected = screen.route == currentRoute,
                                     onClick = {
@@ -52,13 +52,17 @@ class MainActivity : AppCompatActivity() {
                     }
                 ) {
                     NavHost(navController, startDestination = Screen.PictureList.route) {
-                        composable(Screen.PictureList.route) { PictureListScreen(navController) }
-                        composable(Screen.AlbumList.route) { AlbumListScreen(navController) }
+                        composable(Screen.PictureList.route) {
+                            PictureListScreen { pictureId ->
+                                navController.navigate("${Screen.PictureDetail.route}/$pictureId")
+                            }
+                        }
+                        composable(Screen.AlbumList.route) { AlbumListScreen() }
                         composable(
                             "${Screen.PictureDetail.route}/{id}",
                             arguments = listOf(navArgument("id") { type = NavType.IntType })
                         ) { navBackStackEntry ->
-                            PictureDetailScreen(navController, navBackStackEntry.arguments?.getInt("id"))
+                            PictureDetailScreen(navBackStackEntry.arguments?.getInt("id"))
                         }
                     }
                 }
