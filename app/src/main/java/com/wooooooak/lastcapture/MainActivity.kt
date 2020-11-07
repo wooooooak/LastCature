@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                                     label = { Text(text = screen.name) },
                                     selected = screen.route == currentRoute,
                                     onClick = {
-                                        navController.popBackStack()
+                                        navController.popBackStack(navController.graph.startDestination, false)
                                         if (currentRoute != screen.route) {
                                             navController.navigate(screen.route)
                                         }
