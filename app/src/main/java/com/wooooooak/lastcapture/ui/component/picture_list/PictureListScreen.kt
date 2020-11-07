@@ -1,4 +1,4 @@
-package com.wooooooak.lastcapture.ui.screen.picture_list
+package com.wooooooak.lastcapture.ui.component.picture_list
 
 import androidx.compose.foundation.Text
 import androidx.compose.material.Button

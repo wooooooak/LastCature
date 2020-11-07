@@ -1,4 +1,4 @@
-package com.wooooooak.lastcapture.ui.screen.picture_detail
+package com.wooooooak.lastcapture.ui.component.picture_detail
 
 import androidx.compose.foundation.Text
 import androidx.compose.runtime.Composable

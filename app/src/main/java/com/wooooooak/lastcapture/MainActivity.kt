@@ -21,6 +21,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import com.wooooooak.lastcapture.data.repository.AlbumRepository
 import com.wooooooak.lastcapture.data.repository.IAlbumRepository
+import com.wooooooak.lastcapture.mapper.AlbumMapper
 import com.wooooooak.lastcapture.ui.LastCaptureTheme
 import com.wooooooak.lastcapture.ui.component.Screen
 import com.wooooooak.lastcapture.ui.component.album_list.AlbumListScreen
@@ -34,10 +35,15 @@ class MainActivity : AppCompatActivity() {
         Screen.AlbumList,
     )
 
-    class HasParamViewModelFactory(private val param: AlbumRepository) : ViewModelProvider.Factory {
+    class HasParamViewModelFactory(
+        private val param: AlbumRepository,
+        private val mapper: AlbumMapper,
+    ) :
+        ViewModelProvider
+        .Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return if (modelClass.isAssignableFrom(AlbumListViewModel::class.java)) {
-                AlbumListViewModel(param) as T
+                AlbumListViewModel(param, mapper) as T
             } else {
                 throw IllegalArgumentException()
             }
@@ -50,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             val navController = rememberNavController()
 
             val albumListViewModel by viewModels<AlbumListViewModel> {
-                HasParamViewModelFactory(IAlbumRepository())
+                HasParamViewModelFactory(IAlbumRepository(), AlbumMapper())
             }
 
             LastCaptureTheme {

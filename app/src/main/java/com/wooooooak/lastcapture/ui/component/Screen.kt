@@ -1,4 +1,4 @@
-package com.wooooooak.lastcapture.ui.screen
+package com.wooooooak.lastcapture.ui.component
 
 // TODO name을 resource id로 바꾸기
 sealed class Screen(val route: String, val name: String) {
