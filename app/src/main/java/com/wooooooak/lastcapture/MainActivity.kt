@@ -20,7 +20,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import com.wooooooak.lastcapture.data.repository.AlbumRepository
-import com.wooooooak.lastcapture.data.repository.IAlbumRepository
+import com.wooooooak.lastcapture.data.repository.AlbumRepositoryImpl
+import com.wooooooak.lastcapture.data.source.local.AlbumLocalDataSource
 import com.wooooooak.lastcapture.ui.LastCaptureTheme
 import com.wooooooak.lastcapture.ui.component.Screen
 import com.wooooooak.lastcapture.ui.component.album_list.AlbumListScreen
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity() {
             val navController = rememberNavController()
 
             val albumListViewModel by viewModels<AlbumListViewModel> {
-                HasParamViewModelFactory(IAlbumRepository())
+                HasParamViewModelFactory(AlbumRepositoryImpl(AlbumLocalDataSource(this)))
             }
 
             LastCaptureTheme {

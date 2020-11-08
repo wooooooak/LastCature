@@ -25,7 +25,7 @@ fun AlbumListScreen(viewModel: AlbumListViewModel) {
         Divider(thickness = 10.dp, color = Color.White)
         LazyColumnFor(items = allAlbumLocal) { album ->
             Surface(modifier = Modifier.padding(8.dp)) {
-                Text(text = album.name, style = TextStyle(fontSize = 16.sp))
+                Text(text = "${album.name}, ${album.imageUrl}", style = TextStyle(fontSize = 16.sp))
             }
         }
     }
