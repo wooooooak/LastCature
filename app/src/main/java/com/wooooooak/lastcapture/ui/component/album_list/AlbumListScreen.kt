@@ -23,13 +23,13 @@ fun AlbumListScreen(viewModel: AlbumListViewModel) {
         Divider(thickness = 10.dp, color = Color.White)
         LazyGirdViewFor(
             items = allAlbumLocal,
-            columnCount = 3,
+            columnCount = 2,
             itemModifier = Modifier.padding(8.dp)
         ) { album ->
             Surface {
                 Column {
                     Text(text = album.name)
-                    Text(text = album.imageUrl.toString())
+                    Text(text = album.imageUri.toString())
                 }
             }
         }
