@@ -11,6 +11,9 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import com.skydoves.landscapist.glide.GlideImage
 import com.wooooooak.lastcapture.ui.component.LazyGirdViewFor
 import com.wooooooak.lastcapture.ui.model.AlbumModel
 
@@ -28,8 +31,14 @@ fun AlbumListScreen(viewModel: AlbumListViewModel) {
         ) { album ->
             Surface {
                 Column {
+                    GlideImage(
+                        imageModel = album.imageUri,
+                        requestOptions = RequestOptions()
+                            .override(256, 256)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .centerCrop(),
+                    )
                     Text(text = album.name)
-                    Text(text = album.imageUri.toString())
                 }
             }
         }

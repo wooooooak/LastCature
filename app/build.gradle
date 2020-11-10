@@ -64,7 +64,7 @@ dependencies {
     implementation 'com.github.wooooooak:CoroutinesPermission:1.0.2'
 
     // image
-
+    implementation "com.github.skydoves:landscapist-glide:1.0.8"
     // koin
     implementation "org.koin:koin-core:2.1.5"
     implementation "org.koin:koin-androidx-scope:2.1.5"
