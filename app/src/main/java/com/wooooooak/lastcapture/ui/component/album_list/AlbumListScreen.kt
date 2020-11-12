@@ -1,8 +1,10 @@
 package com.wooooooak.lastcapture.ui.component.album_list
 
 import androidx.compose.foundation.Text
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -31,13 +33,15 @@ fun AlbumListScreen(viewModel: AlbumListViewModel) {
         ) { album ->
             Surface {
                 Column {
-                    GlideImage(
-                        imageModel = album.imageUri,
-                        requestOptions = RequestOptions()
-                            .override(256, 256)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .centerCrop(),
-                    )
+                    Box(modifier = Modifier.size(170.dp)) {
+                        GlideImage(
+                            imageModel = album.imageUri,
+                            requestOptions = RequestOptions()
+                                .override(256, 256)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .centerCrop(),
+                        )
+                    }
                     Text(text = album.name)
                 }
             }
