@@ -25,10 +25,14 @@ class AlbumListViewModel(
 
     fun onClickAlbum(albumModel: AlbumModel) {
         viewModelScope.launch {
-            albumRepository.addSelectedAlbum(albumModel.mapToLocal())
-            _allAlbum.value = allAlbum.value?.map {
-                if (it == albumModel) albumModel.copy(isClicked = !albumModel.isClicked)
-                else it
+            if (albumModel.isClicked) {
+
+            } else {
+                val newAlbumModel = albumModel.copy(isClicked = true)
+                albumRepository.addSelectedAlbum(newAlbumModel.mapToLocal())
+                _allAlbum.value = allAlbum.value?.map {
+                    if (it == albumModel) newAlbumModel else it
+                }
             }
         }
     }

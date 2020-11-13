@@ -1,6 +1,5 @@
 package com.wooooooak.lastcapture.data.repository
 
-import com.orhanobut.logger.Logger
 import com.wooooooak.lastcapture.data.model.AlbumLocal
 import com.wooooooak.lastcapture.data.source.local.AlbumLocalDataSource
 import kotlinx.coroutines.Dispatchers
@@ -11,12 +10,9 @@ class AlbumRepositoryImpl(private val albumLocalDataSource: AlbumLocalDataSource
         // 모든 앨범에서 내가 선택한 앨범을 표기해서 주기
         val allAlbumList = albumLocalDataSource.getAllAlbum()
         val selectedAlbumList = albumLocalDataSource.getSelectedAlbumList()
-        Logger.d(allAlbumList)
-        val a = allAlbumList.map { albumLocal ->
-            selectedAlbumList.findLast { it == albumLocal } ?: albumLocal
+        allAlbumList.map { albumLocal ->
+            selectedAlbumList.findLast { it.name == albumLocal.name } ?: albumLocal
         }
-        Logger.d(a)
-        a
     }
 
     override suspend fun addSelectedAlbum(albumLocal: AlbumLocal) {

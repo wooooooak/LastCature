@@ -3,7 +3,6 @@ package com.wooooooak.lastcapture.data.source.local
 import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
-import com.orhanobut.logger.Logger
 import com.wooooooak.lastcapture.data.dao.AlbumDao
 import com.wooooooak.lastcapture.data.model.AlbumLocal
 import kotlin.coroutines.resume
@@ -20,8 +19,6 @@ class AlbumLocalDataSource(
     private val context: Context,
     private val albumDao: AlbumDao?,
 ) {
-    suspend fun addSelectedAlbum(album: AlbumLocal) = albumDao?.addSelectedAlbum(album)
-
     suspend fun getAllAlbum(): List<AlbumLocal> = suspendCoroutine { continuation ->
         var albumList: List<AlbumLocal> = listOf()
         val projection = arrayOf(
@@ -41,7 +38,6 @@ class AlbumLocalDataSource(
             val idColumn = it.getColumnIndexOrThrow(INDEX_MEDIA_ID)
             val albumNameColumn = it.getColumnIndexOrThrow(INDEX_ALBUM_NAME)
 
-            Logger.d("query : $it")
             albumList = generateSequence { if (it.moveToNext()) it else null }
                 .map { cursor ->
                     val id = cursor.getLong(idColumn)
@@ -58,6 +54,8 @@ class AlbumLocalDataSource(
 
         continuation.resume(albumList)
     }
+
+    suspend fun addSelectedAlbum(album: AlbumLocal) = albumDao?.addSelectedAlbum(album)
 
     suspend fun getSelectedAlbumList(): List<AlbumLocal> {
         return albumDao?.getSelectedAlbumList() ?: listOf()
