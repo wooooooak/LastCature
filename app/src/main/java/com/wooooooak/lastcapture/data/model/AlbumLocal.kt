@@ -1,9 +1,11 @@
 package com.wooooooak.lastcapture.data.model
 
-import android.net.Uri
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity
 data class AlbumLocal(
-    val name: String,
-    val uri: Uri,
+    @PrimaryKey val name: String,
+    val imageResource: String,
     val selected: Boolean = false
 )

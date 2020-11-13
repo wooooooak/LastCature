@@ -1,6 +1,7 @@
 package com.wooooooak.lastcapture.ui.component.album_list
 
 import androidx.compose.foundation.Text
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -21,7 +22,7 @@ import com.wooooooak.lastcapture.ui.model.AlbumModel
 
 @Composable
 fun AlbumListScreen(viewModel: AlbumListViewModel) {
-    val allAlbumLocal: List<AlbumModel> by viewModel.allAlbumLocal.observeAsState(initial = listOf())
+    val allAlbumLocal: List<AlbumModel> by viewModel.allAlbum.observeAsState(initial = listOf())
     Column {
         Divider(thickness = 8.dp, color = Color.White)
         Text(text = "앨범을 선택해주세요", modifier = Modifier.padding(start = 8.dp))
@@ -31,7 +32,7 @@ fun AlbumListScreen(viewModel: AlbumListViewModel) {
             columnCount = 2,
             itemModifier = Modifier.padding(8.dp)
         ) { album ->
-            Surface {
+            Surface(modifier = Modifier.clickable(onClick = { viewModel.onClickAlbum(album) })) {
                 Column {
                     Box(modifier = Modifier.size(170.dp)) {
                         GlideImage(
@@ -41,6 +42,9 @@ fun AlbumListScreen(viewModel: AlbumListViewModel) {
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .centerCrop(),
                         )
+                        if (album.isClicked) {
+                            Text(text = "is Clicked!!")
+                        }
                     }
                     Text(text = album.name)
                 }

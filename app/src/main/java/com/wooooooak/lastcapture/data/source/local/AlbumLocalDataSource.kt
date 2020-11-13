@@ -3,6 +3,8 @@ package com.wooooooak.lastcapture.data.source.local
 import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
+import com.orhanobut.logger.Logger
+import com.wooooooak.lastcapture.data.dao.AlbumDao
 import com.wooooooak.lastcapture.data.model.AlbumLocal
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -14,7 +16,12 @@ private const val INDEX_IMAGE_NAME = MediaStore.Images.Media.DISPLAY_NAME
 private const val INDEX_DATE_TAKEN = MediaStore.Images.Media.DATE_TAKEN
 private const val orderOption = "$INDEX_DATE_TAKEN DESC"
 
-class AlbumLocalDataSource(private val context: Context) {
+class AlbumLocalDataSource(
+    private val context: Context,
+    private val albumDao: AlbumDao?,
+) {
+    suspend fun addSelectedAlbum(album: AlbumLocal) = albumDao?.addSelectedAlbum(album)
+
     suspend fun getAllAlbum(): List<AlbumLocal> = suspendCoroutine { continuation ->
         var albumList: List<AlbumLocal> = listOf()
         val projection = arrayOf(
@@ -23,17 +30,18 @@ class AlbumLocalDataSource(private val context: Context) {
             INDEX_IMAGE_NAME,
             INDEX_DATE_TAKEN
         )
-        val qurey = context.contentResolver.query(
+        val query = context.contentResolver.query(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
             projection,
             null,
             null,
             orderOption
         )
-        qurey?.use {
+        query?.use {
             val idColumn = it.getColumnIndexOrThrow(INDEX_MEDIA_ID)
             val albumNameColumn = it.getColumnIndexOrThrow(INDEX_ALBUM_NAME)
 
+            Logger.d("query : $it")
             albumList = generateSequence { if (it.moveToNext()) it else null }
                 .map { cursor ->
                     val id = cursor.getLong(idColumn)
@@ -42,7 +50,7 @@ class AlbumLocalDataSource(private val context: Context) {
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                         id.toString()
                     )
-                    AlbumLocal(albumName, uri)
+                    AlbumLocal(albumName, uri.toString())
                 }
                 .groupBy { it.name }
                 .map { it.value[0] }
@@ -50,4 +58,9 @@ class AlbumLocalDataSource(private val context: Context) {
 
         continuation.resume(albumList)
     }
+
+    suspend fun getSelectedAlbumList(): List<AlbumLocal> {
+        return albumDao?.getSelectedAlbumList() ?: listOf()
+    }
+
 }
