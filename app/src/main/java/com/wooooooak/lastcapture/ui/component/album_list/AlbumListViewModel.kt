@@ -19,7 +19,7 @@ class AlbumListViewModel(
 
     init {
         viewModelScope.launch {
-            _allAlbum.value = albumRepository.getAllAlbum().map { it.mapToUi() }
+            fetchAllAlbum()
         }
     }
 
@@ -32,8 +32,13 @@ class AlbumListViewModel(
                 albumRepository.addSelectedAlbum(newAlbumModel.mapToLocal())
             }
             _allAlbum.value = allAlbum.value?.map {
-                if (it == albumModel) newAlbumModel else it
+                if (it.name == albumModel.name) newAlbumModel else it
             }
+            println("실제 : ${_allAlbum.value}")
         }
+    }
+
+    private suspend fun fetchAllAlbum() {
+        _allAlbum.value = albumRepository.getAllAlbum().map { it.mapToUi() }
     }
 }

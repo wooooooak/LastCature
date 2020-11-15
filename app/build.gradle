@@ -26,6 +26,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
     buildFeatures {
         compose true
     }
@@ -47,6 +50,8 @@ dependencies {
     implementation 'androidx.compose.foundation:foundation:1.0.0-alpha06'
     implementation "androidx.navigation:navigation-compose:1.0.0-alpha01"
     implementation "androidx.ui:ui-tooling:1.0.0-alpha06"
+    // Integration with observables
+    implementation 'androidx.compose.runtime:runtime-livedata:1.0.0-alpha06'
 
     // room
     implementation "androidx.room:room-runtime:2.2.5"
@@ -57,9 +62,6 @@ dependencies {
     // Material design icons
     implementation 'androidx.compose.material:material-icons-core:1.0.0-alpha06'
     implementation 'androidx.compose.material:material-icons-extended:1.0.0-alpha06'
-
-    // Integration with observables
-    implementation 'androidx.compose.runtime:runtime-livedata:1.0.0-alpha06'
 
     // lifecycle
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-beta01"
@@ -84,11 +86,15 @@ dependencies {
     implementation 'com.orhanobut:logger:2.2.0'
 
     testImplementation 'junit:junit:4.13.1'
-    androidTestImplementation 'androidx.test:runner:1.3.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    // AndroidX Test - JVM testing - AndroidJUnit4
     testImplementation "androidx.test:core-ktx:1.3.0"
     testImplementation "androidx.test.ext:junit-ktx:1.1.2"
     testImplementation "androidx.arch.core:core-testing:2.1.0"
     testImplementation "org.robolectric:robolectric:4.3.1"
+    testImplementation "com.google.truth:truth:1.0.1"
+    testImplementation "androidx.test.ext:truth:1.3.0"
+    testImplementation "androidx.test:rules:1.3.0"
+
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.9"
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
