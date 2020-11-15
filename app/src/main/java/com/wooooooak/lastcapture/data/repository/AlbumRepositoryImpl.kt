@@ -19,6 +19,7 @@ class AlbumRepositoryImpl(private val albumLocalDataSource: AlbumLocalDataSource
         albumLocalDataSource.addSelectedAlbum(albumLocal)
     }
 
-    override fun removeSelectedAlbum(albumLocal: AlbumLocal) {
+    override suspend fun removeSelectedAlbum(albumLocal: AlbumLocal) {
+        albumLocalDataSource.removeSElectedAlbum(albumLocal)
     }
 }

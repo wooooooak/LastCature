@@ -1,9 +1,6 @@
 package com.wooooooak.lastcapture.data.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.wooooooak.lastcapture.data.model.AlbumLocal
 
 @Dao
@@ -13,4 +10,7 @@ interface AlbumDao {
 
     @Query("SELECT * FROM AlbumLocal")
     suspend fun getSelectedAlbumList(): List<AlbumLocal>
+
+    @Delete
+    suspend fun removeSelectedAlbum(albumLocal: AlbumLocal)
 }

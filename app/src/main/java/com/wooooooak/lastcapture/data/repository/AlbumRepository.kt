@@ -5,5 +5,5 @@ import com.wooooooak.lastcapture.data.model.AlbumLocal
 interface AlbumRepository {
     suspend fun getAllAlbum(): List<AlbumLocal>
     suspend fun addSelectedAlbum(albumLocal: AlbumLocal)
-    fun removeSelectedAlbum(albumLocal: AlbumLocal)
+    suspend fun removeSelectedAlbum(albumLocal: AlbumLocal)
 }

@@ -57,6 +57,8 @@ class AlbumLocalDataSource(
 
     suspend fun addSelectedAlbum(album: AlbumLocal) = albumDao?.addSelectedAlbum(album)
 
+    suspend fun removeSElectedAlbum(album: AlbumLocal) = albumDao?.removeSelectedAlbum(album)
+
     suspend fun getSelectedAlbumList(): List<AlbumLocal> {
         return albumDao?.getSelectedAlbumList() ?: listOf()
     }
