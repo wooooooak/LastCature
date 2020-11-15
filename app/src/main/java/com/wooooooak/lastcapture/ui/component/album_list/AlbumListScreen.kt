@@ -36,7 +36,7 @@ fun AlbumListScreen(viewModel: AlbumListViewModel) {
                 Column {
                     Box(modifier = Modifier.size(170.dp)) {
                         GlideImage(
-                            imageModel = album.imageUri ?: "",
+                            imageModel = album.image,
                             requestOptions = RequestOptions()
                                 .override(256, 256)
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
