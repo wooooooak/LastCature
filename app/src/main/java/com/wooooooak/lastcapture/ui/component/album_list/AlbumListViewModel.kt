@@ -34,7 +34,6 @@ class AlbumListViewModel(
             _allAlbum.value = allAlbum.value?.map {
                 if (it.name == albumModel.name) newAlbumModel else it
             }
-            println("실제 : ${_allAlbum.value}")
         }
     }
 

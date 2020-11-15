@@ -53,6 +53,7 @@ class AlbumListViewModelTest {
     @After
     fun tearDown() {
         Dispatchers.resetMain()
+        testDispatcher.cleanupTestCoroutines()
     }
 
     @Test
