@@ -1,13 +1,11 @@
 package com.wooooooak.lastcapture.ui.component.album_list
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.wooooooak.lastcapture.data.repository.AlbumRepository
 import com.wooooooak.lastcapture.mapToLocal
 import com.wooooooak.lastcapture.mapToUi
 import com.wooooooak.lastcapture.ui.model.AlbumModel
+import com.wooooooak.lastcapture.ui.model.ImageModel
 import kotlinx.coroutines.launch
 
 class AlbumListViewModel(
@@ -16,6 +14,12 @@ class AlbumListViewModel(
 
     private val _allAlbum = MutableLiveData<List<AlbumModel>>()
     val allAlbum: LiveData<List<AlbumModel>> = _allAlbum
+
+    val selectedImage: LiveData<List<ImageModel>> = allAlbum.switchMap {
+        liveData {
+            emit(albumRepository.getSelectedImage(15).map { it.mapToUi() })
+        }
+    }
 
     init {
         viewModelScope.launch {
@@ -40,4 +44,5 @@ class AlbumListViewModel(
     private suspend fun fetchAllAlbum() {
         _allAlbum.value = albumRepository.getAllAlbum().map { it.mapToUi() }
     }
+
 }

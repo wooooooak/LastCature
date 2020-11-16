@@ -14,15 +14,18 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.skydoves.landscapist.glide.GlideImage
 import com.wooooooak.lastcapture.ui.component.LazyGirdViewFor
 import com.wooooooak.lastcapture.ui.model.AlbumModel
+import com.wooooooak.lastcapture.ui.model.ImageModel
 
 @Composable
 fun AlbumListScreen(viewModel: AlbumListViewModel) {
     val allAlbumLocal: List<AlbumModel> by viewModel.allAlbum.observeAsState(initial = listOf())
+    val imageList: List<ImageModel> by viewModel.selectedImage.observeAsState(initial = listOf())
     Column {
         Divider(thickness = 8.dp, color = Color.White)
         Text(text = "앨범을 선택해주세요", modifier = Modifier.padding(start = 8.dp))
@@ -36,7 +39,7 @@ fun AlbumListScreen(viewModel: AlbumListViewModel) {
                 Column {
                     Box(modifier = Modifier.size(170.dp)) {
                         GlideImage(
-                            imageModel = album.image,
+                            imageModel = album.image.toUri(),
                             requestOptions = RequestOptions()
                                 .override(256, 256)
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)

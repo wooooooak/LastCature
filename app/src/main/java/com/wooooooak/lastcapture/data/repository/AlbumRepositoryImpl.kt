@@ -1,6 +1,7 @@
 package com.wooooooak.lastcapture.data.repository
 
 import com.wooooooak.lastcapture.data.model.AlbumLocal
+import com.wooooooak.lastcapture.data.model.ImageLocal
 import com.wooooooak.lastcapture.data.source.local.AlbumLocalDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -20,6 +21,13 @@ class AlbumRepositoryImpl(private val albumLocalDataSource: AlbumLocalDataSource
     }
 
     override suspend fun removeSelectedAlbum(albumLocal: AlbumLocal) {
-        albumLocalDataSource.removeSElectedAlbum(albumLocal)
+        albumLocalDataSource.removeSelectedAlbum(albumLocal)
+    }
+
+    override suspend fun getSelectedImage(
+        count: Int
+    ): List<ImageLocal> = withContext(Dispatchers.IO) {
+        val albumNames = albumLocalDataSource.getSelectedAlbumList().map { it.name }
+        albumLocalDataSource.getSelectedImageList(count, albumNames)
     }
 }
