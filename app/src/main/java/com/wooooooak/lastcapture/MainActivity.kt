@@ -29,6 +29,7 @@ import com.wooooooak.lastcapture.ui.component.album_list.AlbumListScreen
 import com.wooooooak.lastcapture.ui.component.album_list.AlbumListViewModel
 import com.wooooooak.lastcapture.ui.component.picture_detail.PictureDetailScreen
 import com.wooooooak.lastcapture.ui.component.picture_list.PictureListScreen
+import kotlinx.coroutines.Dispatchers
 
 class MainActivity : AppCompatActivity() {
     private val bottomNavigationItem = listOf(
@@ -61,10 +62,12 @@ class MainActivity : AppCompatActivity() {
                         AlbumLocalDataSource(
                             this,
                             AppDataBase.getInstance(this)?.albumDao()
-                        )
+                        ),
+                        Dispatchers.IO
                     )
                 )
             }
+
 
             LastCaptureTheme {
                 Scaffold(

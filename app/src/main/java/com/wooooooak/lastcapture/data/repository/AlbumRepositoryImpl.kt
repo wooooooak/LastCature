@@ -3,11 +3,15 @@ package com.wooooooak.lastcapture.data.repository
 import com.wooooooak.lastcapture.data.model.AlbumLocal
 import com.wooooooak.lastcapture.data.model.ImageLocal
 import com.wooooooak.lastcapture.data.source.local.AlbumLocalDataSource
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
-class AlbumRepositoryImpl(private val albumLocalDataSource: AlbumLocalDataSource) : AlbumRepository {
-    override suspend fun getAllAlbum(): List<AlbumLocal> = withContext(Dispatchers.IO) {
+class AlbumRepositoryImpl(
+    private val albumLocalDataSource: AlbumLocalDataSource,
+    private val dispatcher: CoroutineDispatcher
+) :
+    AlbumRepository {
+    override suspend fun getAllAlbum(): List<AlbumLocal> = withContext(dispatcher) {
         // 모든 앨범에서 내가 선택한 앨범을 표기해서 주기
         val allAlbumList = albumLocalDataSource.getAllAlbum()
         val selectedAlbumList = albumLocalDataSource.getSelectedAlbumList()
@@ -26,7 +30,7 @@ class AlbumRepositoryImpl(private val albumLocalDataSource: AlbumLocalDataSource
 
     override suspend fun getSelectedImage(
         count: Int
-    ): List<ImageLocal> = withContext(Dispatchers.IO) {
+    ): List<ImageLocal> = withContext(dispatcher) {
         val albumNames = albumLocalDataSource.getSelectedAlbumList().map { it.name }
         albumLocalDataSource.getSelectedImageList(count, albumNames)
     }
