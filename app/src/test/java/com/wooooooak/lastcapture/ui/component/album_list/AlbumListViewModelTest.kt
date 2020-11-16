@@ -6,6 +6,8 @@ import com.wooooooak.lastcapture.data.model.AlbumLocal
 import com.wooooooak.lastcapture.fake.FakeAlbumRepository
 import com.wooooooak.lastcapture.mapToUi
 import getOrAwaitValue
+import io.mockk.coVerify
+import io.mockk.spyk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
@@ -29,8 +31,6 @@ class AlbumListViewModelTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var albumRepository: FakeAlbumRepository
-
     private lateinit var albumListViewModel: AlbumListViewModel
 
     private val album1 = AlbumLocal("album1", "image1", false)
@@ -38,13 +38,13 @@ class AlbumListViewModelTest {
     private val album3 = AlbumLocal("album3", "image3", true)
     private val album4 = AlbumLocal("album4", "image4", true)
 
+    private var albumRepository: FakeAlbumRepository = spyk(FakeAlbumRepository())
+
     @ObsoleteCoroutinesApi
     @Before
     fun setUp() = runBlockingTest {
+        albumRepository.addAlbumList(listOf(album1, album2, album3, album4))
         Dispatchers.setMain(testDispatcher)
-        albumRepository = FakeAlbumRepository().apply {
-            addAlbumList(listOf(album1, album2, album3, album4))
-        }
         coroutineScope {
             albumListViewModel = AlbumListViewModel(albumRepository)
         }
@@ -52,8 +52,16 @@ class AlbumListViewModelTest {
 
     @After
     fun tearDown() {
+        albumRepository.clear()
         Dispatchers.resetMain()
         testDispatcher.cleanupTestCoroutines()
+    }
+
+    @Test
+    fun `어떤 앨범을 선택하든 Repository의 getSelectedImage함수가 호출된다`() = runBlockingTest {
+        albumListViewModel.onClickAlbum(album2.mapToUi())
+        albumListViewModel.selectedImage.getOrAwaitValue()
+        coVerify(exactly = 1) { albumRepository.getSelectedImage(any()) }
     }
 
     @Test
