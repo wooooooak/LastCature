@@ -22,10 +22,9 @@ import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi // LOOK HERE
+@ObsoleteCoroutinesApi
 class AlbumListViewModelTest {
 
-    @ObsoleteCoroutinesApi
-//    private val testDispatcher = newSingleThreadContext("UI main")
     private val testDispatcher = TestCoroutineDispatcher()
 
     @get:Rule

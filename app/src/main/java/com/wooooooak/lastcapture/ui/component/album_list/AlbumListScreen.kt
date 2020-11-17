@@ -6,12 +6,18 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
+import androidx.compose.material.Icon
 import androidx.compose.material.Surface
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
@@ -35,23 +41,40 @@ fun AlbumListScreen(viewModel: AlbumListViewModel) {
             columnCount = 2,
             itemModifier = Modifier.padding(8.dp)
         ) { album ->
-            Surface(modifier = Modifier.clickable(onClick = { viewModel.onClickAlbum(album) })) {
-                Column {
-                    Box(modifier = Modifier.size(170.dp)) {
-                        GlideImage(
-                            imageModel = album.image.toUri(),
-                            requestOptions = RequestOptions()
-                                .override(256, 256)
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                .centerCrop(),
-                        )
-                        if (album.isClicked) {
-                            Text(text = "is Clicked!!")
-                        }
-                    }
-                    Text(text = album.name)
+            AlbumItem(album) {
+                viewModel.onClickAlbum(it)
+            }
+        }
+    }
+}
+
+@Composable
+fun AlbumItem(album: AlbumModel, onClickAlbum: (AlbumModel) -> Unit) {
+    Surface(modifier = Modifier.clickable(onClick = { onClickAlbum(album) })) {
+        Column {
+            Box(
+                modifier = Modifier
+                    .size(170.dp)
+                    .clip(RoundedCornerShape(16.dp))
+            ) {
+                GlideImage(
+                    imageModel = album.image.toUri(),
+                    requestOptions = RequestOptions()
+                        .override(256, 256)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .centerCrop(),
+                )
+                if (album.isClicked) {
+                    Icon(
+                        asset = Icons.Filled.Favorite,
+                        tint = Color.Red,
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(end = 16.dp, top = 4.dp)
+                    )
                 }
             }
+            Text(text = album.name)
         }
     }
 }

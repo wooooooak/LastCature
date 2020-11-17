@@ -9,8 +9,7 @@ import kotlinx.coroutines.withContext
 class AlbumRepositoryImpl(
     private val albumLocalDataSource: AlbumLocalDataSource,
     private val dispatcher: CoroutineDispatcher
-) :
-    AlbumRepository {
+) : AlbumRepository {
     override suspend fun getAllAlbum(): List<AlbumLocal> = withContext(dispatcher) {
         // 모든 앨범에서 내가 선택한 앨범을 표기해서 주기
         val allAlbumList = albumLocalDataSource.getAllAlbum()
