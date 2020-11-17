@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -33,9 +34,9 @@ fun AlbumListScreen(viewModel: AlbumListViewModel) {
     val allAlbumLocal: List<AlbumModel> by viewModel.allAlbum.observeAsState(initial = listOf())
     val imageList: List<ImageModel> by viewModel.selectedImage.observeAsState(initial = listOf())
     Column {
-        Divider(thickness = 8.dp, color = Color.White)
+        Divider(thickness = 8.dp, color = MaterialTheme.colors.surface)
         Text(text = "앨범을 선택해주세요", modifier = Modifier.padding(start = 8.dp))
-        Divider(thickness = 10.dp, color = Color.White)
+        Divider(thickness = 10.dp, color = MaterialTheme.colors.surface)
         LazyGirdViewFor(
             items = allAlbumLocal,
             columnCount = 2,
