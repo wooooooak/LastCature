@@ -30,7 +30,11 @@ class AlbumRepositoryImpl(
     override suspend fun getSelectedImage(
         count: Int
     ): List<ImageLocal> = withContext(dispatcher) {
-        val albumNames = albumLocalDataSource.getSelectedAlbumList().map { it.name }
-        albumLocalDataSource.getSelectedImageList(count, albumNames)
+        if (count == 0) {
+            listOf()
+        } else {
+            val albumNames = albumLocalDataSource.getSelectedAlbumList().map { it.name }
+            albumLocalDataSource.getSelectedImageList(count, albumNames)
+        }
     }
 }
