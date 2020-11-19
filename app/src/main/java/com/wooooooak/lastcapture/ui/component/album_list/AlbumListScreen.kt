@@ -1,16 +1,12 @@
 package com.wooooooak.lastcapture.ui.component.album_list
 
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
@@ -20,13 +16,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
-import com.skydoves.landscapist.glide.GlideImage
+import coil.transform.RoundedCornersTransformation
 import com.wooooooak.lastcapture.ui.component.LazyGirdViewFor
 import com.wooooooak.lastcapture.ui.model.AlbumModel
+import dev.chrisbanes.accompanist.coil.CoilImage
 
 @Composable
 fun AlbumListScreen(viewModel: AlbumListViewModel) {
@@ -56,12 +52,13 @@ fun AlbumItem(album: AlbumModel, onClickAlbum: (AlbumModel) -> Unit) {
                     .size(170.dp)
                     .clip(RoundedCornerShape(16.dp))
             ) {
-                GlideImage(
-                    imageModel = album.image.toUri(),
-                    requestOptions = RequestOptions()
-                        .override(256, 256)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .centerCrop(),
+                CoilImage(
+                    data = album.image.toUri(),
+                    contentScale = ContentScale.Crop,
+                    requestBuilder = {
+                        crossfade(true)
+                        transformations(RoundedCornersTransformation())
+                    },
                 )
                 if (album.isClicked) {
                     Icon(

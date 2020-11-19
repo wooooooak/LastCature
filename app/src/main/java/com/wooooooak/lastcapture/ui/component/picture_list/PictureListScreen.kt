@@ -1,27 +1,27 @@
 package com.wooooooak.lastcapture.ui.component.picture_list
 
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.preferredHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
-import com.skydoves.landscapist.glide.GlideImage
+import coil.transform.RoundedCornersTransformation
 import com.wooooooak.lastcapture.ui.component.LazyGirdViewFor
 import com.wooooooak.lastcapture.ui.component.album_list.AlbumListViewModel
 import com.wooooooak.lastcapture.ui.model.ImageModel
+import dev.chrisbanes.accompanist.coil.CoilImage
 
 @Composable
 fun PictureListScreen(
@@ -50,14 +50,16 @@ fun ImageItem(image: ImageModel, onClickImage: (ImageModel) -> Unit) {
         Column {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .preferredHeight(240.dp)
                     .clip(RoundedCornerShape(8.dp))
             ) {
-                GlideImage(
-                    imageModel = image.imagePath.toUri(),
-                    requestOptions = RequestOptions()
-                        .override(500, 500)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                CoilImage(
+                    data = image.imagePath.toUri(),
+                    contentScale = ContentScale.Fit,
+                    requestBuilder = {
+                        crossfade(true)
+                        transformations(RoundedCornersTransformation())
+                    },
                 )
             }
             Text(text = image.name)
