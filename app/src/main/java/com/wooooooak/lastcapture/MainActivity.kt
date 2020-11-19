@@ -4,19 +4,20 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.PhotoAlbum
+import androidx.compose.material.icons.outlined.Image
+import androidx.compose.material.icons.outlined.PhotoAlbum
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import com.wooooooak.lastcapture.data.AppDataBase
@@ -68,7 +69,6 @@ class MainActivity : AppCompatActivity() {
                 )
             }
 
-
             LastCaptureTheme {
                 Scaffold(
                     bottomBar = {
@@ -76,17 +76,7 @@ class MainActivity : AppCompatActivity() {
                             val navBackStackEntry by navController.currentBackStackEntryAsState()
                             val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
                             bottomNavigationItem.forEach { screen ->
-                                BottomNavigationItem(
-                                    icon = { Image(Icons.Filled.FavoriteBorder) },
-                                    label = { Text(text = screen.name) },
-                                    selected = screen.route == currentRoute,
-                                    onClick = {
-                                        navController.popBackStack(navController.graph.startDestination, false)
-                                        if (currentRoute != screen.route) {
-                                            navController.navigate(screen.route)
-                                        }
-                                    }
-                                )
+                                LcBottomNavigationItem(navController = navController, screen = screen, currentRoute)
                             }
                         }
                     },
@@ -113,3 +103,30 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
+@Composable
+private fun LcBottomNavigationItem(
+    navController: NavController,
+    screen: Screen,
+    currentRoute: String?,
+) {
+    val isSelected = screen.route == currentRoute
+    BottomNavigationItem(
+        icon = { BottomNavImage(screen, isSelected) },
+        label = { Text(text = screen.name) },
+        selected = isSelected,
+        onClick = {
+            if (currentRoute != screen.route) {
+                navController.popBackStack(navController.graph.startDestination, false)
+                navController.navigate(screen.route)
+            }
+        }
+    )
+}
+
+@Composable
+private fun BottomNavImage(screen: Screen, isSelected: Boolean) {
+    when (screen.route) {
+        Screen.PictureList.route -> if (isSelected) Image(Icons.Filled.PhotoAlbum) else Image(Icons.Outlined.PhotoAlbum)
+        Screen.AlbumList.route -> if (isSelected) Image(Icons.Filled.Image) else Image(Icons.Outlined.Image)
+    }
+}
