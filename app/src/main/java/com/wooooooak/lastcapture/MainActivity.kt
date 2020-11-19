@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
                     Surface(modifier = Modifier.padding(bottom = it.bottom)) {
                         NavHost(navController, startDestination = Screen.PictureList.route) {
                             composable(Screen.PictureList.route) {
-                                PictureListScreen { pictureId ->
+                                PictureListScreen(albumListViewModel) { pictureId ->
                                     navController.navigate("${Screen.PictureDetail.route}/$pictureId")
                                 }
                             }

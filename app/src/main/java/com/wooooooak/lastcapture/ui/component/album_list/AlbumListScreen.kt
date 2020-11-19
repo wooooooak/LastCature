@@ -27,12 +27,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.skydoves.landscapist.glide.GlideImage
 import com.wooooooak.lastcapture.ui.component.LazyGirdViewFor
 import com.wooooooak.lastcapture.ui.model.AlbumModel
-import com.wooooooak.lastcapture.ui.model.ImageModel
 
 @Composable
 fun AlbumListScreen(viewModel: AlbumListViewModel) {
     val allAlbumLocal: List<AlbumModel> by viewModel.allAlbum.observeAsState(initial = listOf())
-    val imageList: List<ImageModel> by viewModel.selectedImage.observeAsState(initial = listOf())
     Column {
         Divider(thickness = 8.dp, color = MaterialTheme.colors.surface)
         Text(text = "앨범을 선택해주세요", modifier = Modifier.padding(start = 8.dp))
