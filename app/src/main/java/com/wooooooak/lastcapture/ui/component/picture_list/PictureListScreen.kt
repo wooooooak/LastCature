@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.preferredHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -26,26 +25,26 @@ import dev.chrisbanes.accompanist.coil.CoilImage
 @Composable
 fun PictureListScreen(
     albumListViewModel: AlbumListViewModel,
-    navToPictureDetail: (pictureId: Int) -> Unit,
+    navToPictureDetail: (uri: String) -> Unit,
 ) {
     val imageList: List<ImageModel> by albumListViewModel.selectedImage.observeAsState(initial = listOf())
 
     Column {
-        Button(onClick = { navToPictureDetail(10) }) {
-            Text(text = "Navigate to image {10}")
-        }
         LazyGirdViewFor(
             items = imageList,
             columnCount = 2,
             itemModifier = Modifier.padding(8.dp)
         ) { image ->
-            ImageItem(image = image, onClickImage = { })
+            ImageItem(image = image, onClickImage = { navToPictureDetail(image.imagePath) })
         }
     }
 }
 
 @Composable
-fun ImageItem(image: ImageModel, onClickImage: (ImageModel) -> Unit) {
+fun ImageItem(
+    image: ImageModel,
+    onClickImage: (ImageModel) -> Unit,
+) {
     Surface(modifier = Modifier.clickable(onClick = { onClickImage(image) })) {
         Column {
             Box(
