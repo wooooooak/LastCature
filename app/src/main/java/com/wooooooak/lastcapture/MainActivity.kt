@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                 AlbumListViewModelFactory(
                     AlbumRepositoryImpl(
                         AlbumLocalDataSource(
-                            this,
+                            contentResolver,
                             AppDataBase.getInstance(this)?.albumDao()
                         ),
                         Dispatchers.IO

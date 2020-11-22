@@ -1,6 +1,6 @@
 package com.wooooooak.lastcapture.data.source.local
 
-import android.content.Context
+import android.content.ContentResolver
 import android.net.Uri
 import android.provider.MediaStore
 import com.wooooooak.lastcapture.data.dao.AlbumDao
@@ -17,10 +17,10 @@ private const val INDEX_DATE_TAKEN = MediaStore.Images.Media.DATE_TAKEN
 private const val orderOption = "$INDEX_DATE_TAKEN DESC"
 
 class AlbumLocalDataSource(
-    private val context: Context,
+    private val contentResolver: ContentResolver,
     private val albumDao: AlbumDao?,
-) {
-    suspend fun getSelectedImageList(
+) : AlbumDataSource {
+    override suspend fun getSelectedImageList(
         count: Int,
         albumNameList: List<String>,
     ): List<ImageLocal> = suspendCoroutine { continuation ->
@@ -36,7 +36,7 @@ class AlbumLocalDataSource(
             INDEX_DATE_TAKEN
         )
         val where = albumNameList.joinToString(" OR ") { "$INDEX_ALBUM_NAME = '$it'" }
-        val cursor = context.contentResolver.query(
+        val cursor = contentResolver.query(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
             projection,
             where,
@@ -62,14 +62,14 @@ class AlbumLocalDataSource(
         continuation.resume(imageList)
     }
 
-    suspend fun getAllAlbum(): List<AlbumLocal> = suspendCoroutine { continuation ->
+    override suspend fun getAllAlbum(): List<AlbumLocal> = suspendCoroutine { continuation ->
         var albumList: List<AlbumLocal> = listOf()
         val projection = arrayOf(
             INDEX_MEDIA_ID,
             INDEX_ALBUM_NAME,
             INDEX_DATE_TAKEN
         )
-        val cursor = context.contentResolver.query(
+        val cursor = contentResolver.query(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
             projection,
             null,
@@ -97,11 +97,11 @@ class AlbumLocalDataSource(
         continuation.resume(albumList)
     }
 
-    suspend fun addSelectedAlbum(album: AlbumLocal) = albumDao?.addSelectedAlbum(album)
+    override suspend fun addSelectedAlbum(album: AlbumLocal) = albumDao?.addSelectedAlbum(album)
 
-    suspend fun removeSelectedAlbum(album: AlbumLocal) = albumDao?.removeSelectedAlbum(album)
+    override suspend fun removeSelectedAlbum(album: AlbumLocal) = albumDao?.removeSelectedAlbum(album)
 
-    suspend fun getSelectedAlbumList(): List<AlbumLocal> {
+    override suspend fun getSelectedAlbumList(): List<AlbumLocal> {
         return albumDao?.getSelectedAlbumList() ?: listOf()
     }
 

@@ -44,7 +44,7 @@ class AlbumRepositoryImplTest {
     )
 
     @Before
-    fun setUp() = runBlockingTest {
+    fun setUp() {
         Dispatchers.setMain(testDispatcher)
         albumRepositoryImpl = AlbumRepositoryImpl(albumLocalDataSource, testDispatcher)
     }
