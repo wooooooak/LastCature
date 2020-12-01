@@ -50,11 +50,12 @@ fun AlbumItem(album: AlbumModel, onClickAlbum: (AlbumModel) -> Unit) {
             Box(
                 modifier = Modifier
                     .size(170.dp)
+                    .align(Alignment.CenterHorizontally)
                     .clip(RoundedCornerShape(16.dp))
             ) {
                 CoilImage(
                     data = album.image.toUri(),
-                    contentScale = ContentScale.Crop,
+                    contentScale = ContentScale.FillBounds,
                     requestBuilder = {
                         crossfade(true)
                         transformations(RoundedCornersTransformation())
@@ -70,7 +71,7 @@ fun AlbumItem(album: AlbumModel, onClickAlbum: (AlbumModel) -> Unit) {
                     )
                 }
             }
-            Text(text = album.name)
+            Text(text = album.name, modifier = Modifier.align(Alignment.CenterHorizontally))
         }
     }
 }
