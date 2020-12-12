@@ -113,7 +113,7 @@ class AlbumRepositoryImplTest : BehaviorSpec({
         }
     }
 
-    Given("선택된 앨범이 DB에 없는 상황에서") {
+    Given("선택된 앨범 갯수가 0인 상황에서") {
         coEvery { albumLocalDataSource.getSelectedAlbumList() } returns listOf()
         coEvery { albumLocalDataSource.getSelectedImageList(any(), any()) } returns listOf()
         When("getSelectedImage() 호출 될 때") {
