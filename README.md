@@ -2,5 +2,5 @@ Sometimes, i saved some interesting pictures(wise saying, funny picture …) fro
 
 
 
-so I made this project. I can select multiple album what i want. And then this project will show
+In this app, You can select multiple album what you want. And then this project will show
 recent picture in only selected album.
