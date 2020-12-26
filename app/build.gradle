@@ -8,11 +8,11 @@ plugins {
 android {
     compileSdkVersion 30
     defaultConfig {
-        applicationId "com.wooooooak.lastcapture"
+        applicationId "com.wooooooak.lastcapture2"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 2
-        versionName "2"
+        versionCode 1
+        versionName "1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     kotlinOptions {
