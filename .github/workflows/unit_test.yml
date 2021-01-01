@@ -28,7 +28,7 @@ jobs:
           java-version: 1.8
 
       - name: unit test
-        run: ./gradlew check
+        run: ./gradlew test
         
       - name: Android Test Report
         uses: asadmansr/android-test-report-action@v1.2.0
